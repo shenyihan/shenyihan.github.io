@@ -66,6 +66,33 @@
   </entry>
   
   <entry>
+    <title>短线操作</title>
+    <link href="https://shenyihan.github.io/2018/01/01/%E7%9F%AD%E7%BA%BF%E6%93%8D%E4%BD%9C/"/>
+    <id>https://shenyihan.github.io/2018/01/01/短线操作/</id>
+    <published>2018-01-01T01:56:16.000Z</published>
+    <updated>2018-01-12T09:44:05.638Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，本人感觉能在波动中上涨就可以试试。20180111，买入：002208合肥城建 成交价：10:30，20180112，卖出-----------------------：10.69. 盈利仅供参考，据此操作盈亏自负。</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。
+暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，本人感觉能在波动中上涨就可以试试。
+20180111，买入：002208合
+      
+    
+    </summary>
+    
+      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
+    
+    
+      <category term="股票操作" scheme="https://shenyihan.github.io/tags/%E8%82%A1%E7%A5%A8%E6%93%8D%E4%BD%9C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>zookeeper安装使用</title>
     <link href="https://shenyihan.github.io/2017/12/30/PageName/"/>
     <id>https://shenyihan.github.io/2017/12/30/PageName/</id>
@@ -113,6 +140,69 @@
     
     
       <category term="金融知识点" scheme="https://shenyihan.github.io/tags/%E9%87%91%E8%9E%8D%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo加密实例</title>
+    <link href="https://shenyihan.github.io/2017/12/28/hexo%E5%8A%A0%E5%AF%86%E5%AE%9E%E4%BE%8B/"/>
+    <id>https://shenyihan.github.io/2017/12/28/hexo加密实例/</id>
+    <published>2017-12-28T09:58:18.000Z</published>
+    <updated>2018-01-12T10:15:48.897Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>================================================================================================恭喜你，测试成功。去给自己的博客设置一道屏障吧。================================================================================================</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;================================================
+================================================
+
+
+
+恭喜你，测试成功。去给自己的博客设置一道屏障吧。
+
+
+
+
+      
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="博客搭建" scheme="https://shenyihan.github.io/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>hexo设置加密博文</title>
+    <link href="https://shenyihan.github.io/2017/12/28/hexo%E8%AE%BE%E7%BD%AE%E5%8A%A0%E5%AF%86%E5%8D%9A%E6%96%87/"/>
+    <id>https://shenyihan.github.io/2017/12/28/hexo设置加密博文/</id>
+    <published>2017-12-28T09:45:55.000Z</published>
+    <updated>2018-01-12T10:12:32.090Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>最近写了一篇个人文章，想设置成密码登录后才能观看。网上也试了一些其他人的方案，但基本都不能用现就修改流程总结如下：一、目    的：对某一篇文章输入密码后才能观看。二、修改内容：1、增加js前端控制功能              mythemes\layout\_partial\head.ejs 增加如下代码                &lt;%                var password = page.password;                if(password)                {                %&gt;                    &lt;script&gt;                    (function(){                        if (prompt(&apos;请输入文章密码&apos;) != &quot;&lt;%= password %&gt;&quot;){                            alert(&apos;密码错误！&apos;);                            history.back();                        }                    })();                   &lt;/script&gt;                &lt;%}%&gt;               2、将需要设置加密模式观看的md文章抬头增加 password: 你的密码；类似于tags标签。三、实    例：https://shenyihan.github.io/2017/12/28/hexo加密实例/</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;最近写了一篇个人文章，想设置成密码登录后才能观看。网上也试了一些其他人的方案，但基本都不能用
+现就修改流程总结如下：
+一、目    的：对某一篇文章输入密码后才能观看。
+二、修改内容：1、增加js前端控制功能
+              mythemes\l
+      
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="博客搭建" scheme="https://shenyihan.github.io/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
     
   </entry>
   
