@@ -211,16 +211,15 @@
     <link href="https://shenyihan.github.io/2017/12/27/hello-world/"/>
     <id>https://shenyihan.github.io/2017/12/27/hello-world/</id>
     <published>2017-12-27T03:38:16.000Z</published>
-    <updated>2018-01-11T06:28:31.346Z</updated>
+    <updated>2018-01-13T03:21:42.614Z</updated>
     
-    <content type="html"><![CDATA[<p>安装Git Bash<br>安装NodeJs<br>安装hexo<br>生成SSH并添加到github<br>部署项目<br>上传到github<br>绑定个人域名<br>修改及配置主题<br>添加RSS<br>添加评论<br>写文章部分</p>]]></content>
+    <content type="html"><![CDATA[<p>安装Git Bash<br>安装NodeJs<br>安装hexo<br>生成SSH并添加到github<br>部署项目<br>上传到github<br>绑定个人域名<br>修改及配置主题<br>添加RSS<br>添加评论<br>增加\mythemes\layout_partial\plugins\laibili.ejs<br>    &lt;% if (theme.livere_uid){ %&gt;<br>    <section class="comments" id="comments"><br>        <!-- 来必力City版安装代码 --><br>        <div id="lv-container" data-id="city" data-uid="<%- theme.livere_uid %>"><br>        <script type="text/javascript"><br>       (function(d, s) {<br>           var j, e = d.getElementsByTagName(s)[0];</p><pre><code>       if (typeof LivereTower === &apos;function&apos;) { return; }       j = d.createElement(s);       j.src = &apos;https://cdn-city.livere.com/js/embed.dist.js&apos;;       j.async = true;       e.parentNode.insertBefore(j, e);   })(document, &apos;script&apos;);    &lt;/script&gt;&lt;noscript&gt; 为正常使用来必力评论功能请激活JavaScript&lt;/noscript&gt;&lt;/div&gt;&lt;!-- City版安装代码已完成 --&gt;&lt;/section&gt;&lt;% } %&gt;</code></pre><p>comment.ejs增加&lt;%- partial(‘../plugins/laibili’) %&gt;<br>_config.yml增加livere_uid:xxxx<br>写文章部分</p></script></div></section></p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;安装Git Bash&lt;br&gt;安装NodeJs&lt;br&gt;安装hexo&lt;br&gt;生成SSH并添加到github&lt;br&gt;部署项目&lt;br&gt;上传到github&lt;br&gt;绑定个人域名&lt;br&gt;修改及配置主题&lt;br&gt;添加RSS&lt;br&gt;添加评论&lt;br&gt;写文章部分&lt;/p&gt;
-
+        &lt;p&gt;安装Git Bash&lt;br&gt;安装NodeJs&lt;br&gt;安装hexo&lt;br&gt;生成SSH并添加到github&lt;br&gt;部署项目&lt;br&gt;上传到github&lt;br&gt;绑定个人域名&lt;br&gt;修改及配置主题&lt;br&gt;添加RSS&lt;br&gt;添加评论&lt;br&gt;增加\mythemes\layout_part
       
     
     </summary>

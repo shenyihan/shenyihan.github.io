@@ -22,18 +22,18 @@
     
     
     <meta name="keywords" content="博客搭建">
-    <meta name="description" content="安装Git Bash安装NodeJs安装hexo生成SSH并添加到github部署项目上传到github绑定个人域名修改及配置主题添加RSS添加评论写文章部分">
+    <meta name="description" content="安装Git Bash安装NodeJs安装hexo生成SSH并添加到github部署项目上传到github绑定个人域名修改及配置主题添加RSS添加评论增加\mythemes\layout_partial\plugins\laibili.ejs    &amp;lt;% if (theme.livere_uid){ %&amp;gt;                                   (functi">
 <meta name="keywords" content="博客搭建">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo从零开始到搭建完整">
 <meta property="og:url" content="https://shenyihan.github.io/2017/12/27/hello-world/index.html">
 <meta property="og:site_name" content="个人主页">
-<meta property="og:description" content="安装Git Bash安装NodeJs安装hexo生成SSH并添加到github部署项目上传到github绑定个人域名修改及配置主题添加RSS添加评论写文章部分">
+<meta property="og:description" content="安装Git Bash安装NodeJs安装hexo生成SSH并添加到github部署项目上传到github绑定个人域名修改及配置主题添加RSS添加评论增加\mythemes\layout_partial\plugins\laibili.ejs    &amp;lt;% if (theme.livere_uid){ %&amp;gt;                                   (functi">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-01-11T06:28:31.346Z">
+<meta property="og:updated_time" content="2018-01-13T03:21:42.614Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo从零开始到搭建完整">
-<meta name="twitter:description" content="安装Git Bash安装NodeJs安装hexo生成SSH并添加到github部署项目上传到github绑定个人域名修改及配置主题添加RSS添加评论写文章部分">
+<meta name="twitter:description" content="安装Git Bash安装NodeJs安装hexo生成SSH并添加到github部署项目上传到github绑定个人域名修改及配置主题添加RSS添加评论增加\mythemes\layout_partial\plugins\laibili.ejs    &amp;lt;% if (theme.livere_uid){ %&amp;gt;                                   (functi">
     
         <link rel="alternate" type="application/atom+xml" title="个人主页" href="/atom.xml">
     
@@ -217,15 +217,30 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>安装Git Bash<br>安装NodeJs<br>安装hexo<br>生成SSH并添加到github<br>部署项目<br>上传到github<br>绑定个人域名<br>修改及配置主题<br>添加RSS<br>添加评论<br>写文章部分</p>
+            <p>安装Git Bash<br>安装NodeJs<br>安装hexo<br>生成SSH并添加到github<br>部署项目<br>上传到github<br>绑定个人域名<br>修改及配置主题<br>添加RSS<br>添加评论<br>增加\mythemes\layout_partial\plugins\laibili.ejs<br>    &lt;% if (theme.livere_uid){ %&gt;<br>    <section class="comments" id="comments"><br>        <!-- 来必力City版安装代码 --><br>        <div id="lv-container" data-id="city" data-uid="<%- theme.livere_uid %>"><br>        <script type="text/javascript"><br>       (function(d, s) {<br>           var j, e = d.getElementsByTagName(s)[0];</p>
+<pre><code>       if (typeof LivereTower === &apos;function&apos;) { return; }
 
+       j = d.createElement(s);
+       j.src = &apos;https://cdn-city.livere.com/js/embed.dist.js&apos;;
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, &apos;script&apos;);
+    &lt;/script&gt;
+&lt;noscript&gt; 为正常使用来必力评论功能请激活JavaScript&lt;/noscript&gt;
+&lt;/div&gt;
+&lt;!-- City版安装代码已完成 --&gt;
+&lt;/section&gt;
+&lt;% } %&gt;
+</code></pre><p>comment.ejs增加&lt;%- partial(‘../plugins/laibili’) %&gt;<br>_config.yml增加livere_uid:xxxx<br>写文章部分</p>
+</script></div></section></p>
         </div>
 
         <blockquote class="post-copyright">
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-01-11T06:28:31.346Z" itemprop="dateUpdated">2018-01-11 14:28:31</time>
+    最后更新时间：<time datetime="2018-01-13T03:21:42.614Z" itemprop="dateUpdated">2018-01-13 11:21:42</time>
 </span><br>
 
 
@@ -332,29 +347,29 @@
 
 
 
-    <!-- Valine Comments -->
-    <div class="comments vcomment" id="comments"></div>
-    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
-    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
-    <!-- Valine Comments script -->
-    <script>
-        var GUEST_INFO = ['nick','mail','link'];
-        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
-          return GUEST_INFO.indexOf(item) > -1
-        });
-        new Valine({
-            el: '#comments',
-            notify: 'false' == 'true',
-            verify: 'false' == 'true',
-            appId: "niqt7jGRsP98j2GWK71sWyAj-gzGzoHsz",
-            appKey: "g88zIiMvTirL8Rs9jtmQ99t8",
-            avatar: "mm",
-            placeholder: "Just go go",
-            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
-            pageSize: "10"
-        })
-    </script>
-    <!-- Valine Comments end -->
+
+
+
+<section class="comments" id="comments">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzE5Mi85NzQ5">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
 
 
 
