@@ -30,7 +30,7 @@
 <meta property="og:site_name" content="个人主页">
 <meta property="og:description" content="最近写了一篇个人文章，想设置成密码登录后才能观看。网上也试了一些其他人的方案，但基本都不能用 现就修改流程总结如下： 一、目    的：对某一篇文章输入密码后才能观看。 二、修改内容：1、增加js前端控制功能               mythemes\layout\_partial\head.ejs 增加如下代码                 &amp;lt;%                 va">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-01-12T10:12:32.090Z">
+<meta property="og:updated_time" content="2018-01-12T10:36:39.297Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="hexo设置加密博文">
 <meta name="twitter:description" content="最近写了一篇个人文章，想设置成密码登录后才能观看。网上也试了一些其他人的方案，但基本都不能用 现就修改流程总结如下： 一、目    的：对某一篇文章输入密码后才能观看。 二、修改内容：1、增加js前端控制功能               mythemes\layout\_partial\head.ejs 增加如下代码                 &amp;lt;%                 va">
@@ -237,7 +237,8 @@
                    &lt;/script&gt;
                 &lt;%}%&gt;
                2、将需要设置加密模式观看的md文章抬头增加 password: 你的密码；类似于tags标签。
-三、实    例：https://shenyihan.github.io/2017/12/28/hexo加密实例/
+三、实    例： 链接：https://shenyihan.github.io/2017/12/28/hexo加密实例/ 
+               密码：password
 </code></pre>
         </div>
 
@@ -245,7 +246,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-01-12T10:12:32.090Z" itemprop="dateUpdated">2018-01-12 18:12:32</time>
+    最后更新时间：<time datetime="2018-01-12T10:36:39.297Z" itemprop="dateUpdated">2018-01-12 18:36:39</time>
 </span><br>
 
 
@@ -353,18 +354,35 @@
 
 
 
-<section class="comments" id="comments">
-    <!-- UY BEGIN -->
-    <div id="uyan_frame"></div>
-    <script src="http://v2.uyan.cc/code/uyan.js?uid=2154990"></script>
-    <!-- UY END -->
-</section>
 
 
 
 
 
 
+    <!-- Valine Comments -->
+    <div class="comments vcomment" id="comments"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+    <script src="//unpkg.com/valine@latest/dist/Valine.min.js"></script>
+    <!-- Valine Comments script -->
+    <script>
+        var GUEST_INFO = ['nick','mail','link'];
+        var guest_info = 'nick,mail,link'.split(',').filter(function(item){
+          return GUEST_INFO.indexOf(item) > -1
+        });
+        new Valine({
+            el: '#comments',
+            notify: 'false' == 'true',
+            verify: 'false' == 'true',
+            appId: "niqt7jGRsP98j2GWK71sWyAj-gzGzoHsz",
+            appKey: "g88zIiMvTirL8Rs9jtmQ99t8",
+            avatar: "mm",
+            placeholder: "Just go go",
+            guest_info: guest_info.length == 0 ? GUEST_INFO : guest_info,
+            pageSize: "10"
+        })
+    </script>
+    <!-- Valine Comments end -->
 
 
 

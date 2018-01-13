@@ -182,9 +182,9 @@
     <link href="https://shenyihan.github.io/2017/12/28/hexo%E8%AE%BE%E7%BD%AE%E5%8A%A0%E5%AF%86%E5%8D%9A%E6%96%87/"/>
     <id>https://shenyihan.github.io/2017/12/28/hexo设置加密博文/</id>
     <published>2017-12-28T09:45:55.000Z</published>
-    <updated>2018-01-12T10:12:32.090Z</updated>
+    <updated>2018-01-12T10:36:39.297Z</updated>
     
-    <content type="html"><![CDATA[<pre><code>最近写了一篇个人文章，想设置成密码登录后才能观看。网上也试了一些其他人的方案，但基本都不能用现就修改流程总结如下：一、目    的：对某一篇文章输入密码后才能观看。二、修改内容：1、增加js前端控制功能              mythemes\layout\_partial\head.ejs 增加如下代码                &lt;%                var password = page.password;                if(password)                {                %&gt;                    &lt;script&gt;                    (function(){                        if (prompt(&apos;请输入文章密码&apos;) != &quot;&lt;%= password %&gt;&quot;){                            alert(&apos;密码错误！&apos;);                            history.back();                        }                    })();                   &lt;/script&gt;                &lt;%}%&gt;               2、将需要设置加密模式观看的md文章抬头增加 password: 你的密码；类似于tags标签。三、实    例：https://shenyihan.github.io/2017/12/28/hexo加密实例/</code></pre>]]></content>
+    <content type="html"><![CDATA[<pre><code>最近写了一篇个人文章，想设置成密码登录后才能观看。网上也试了一些其他人的方案，但基本都不能用现就修改流程总结如下：一、目    的：对某一篇文章输入密码后才能观看。二、修改内容：1、增加js前端控制功能              mythemes\layout\_partial\head.ejs 增加如下代码                &lt;%                var password = page.password;                if(password)                {                %&gt;                    &lt;script&gt;                    (function(){                        if (prompt(&apos;请输入文章密码&apos;) != &quot;&lt;%= password %&gt;&quot;){                            alert(&apos;密码错误！&apos;);                            history.back();                        }                    })();                   &lt;/script&gt;                &lt;%}%&gt;               2、将需要设置加密模式观看的md文章抬头增加 password: 你的密码；类似于tags标签。三、实    例： 链接：https://shenyihan.github.io/2017/12/28/hexo加密实例/                密码：password</code></pre>]]></content>
     
     <summary type="html">
     
