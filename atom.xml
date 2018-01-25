@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shenyihan.github.io/"/>
-  <updated>2018-01-11T09:10:57.717Z</updated>
+  <updated>2018-01-23T03:03:27.052Z</updated>
   <id>https://shenyihan.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>微信机器人</title>
+    <link href="https://shenyihan.github.io/2018/01/15/%E5%BE%AE%E4%BF%A1%E6%9C%BA%E5%99%A8%E4%BA%BA/"/>
+    <id>https://shenyihan.github.io/2018/01/15/微信机器人/</id>
+    <published>2018-01-15T07:51:40.000Z</published>
+    <updated>2018-01-23T03:03:27.052Z</updated>
+    
+    <content type="html"><![CDATA[<p>   最近在做的项目，需要申请一些微信号进行营销工作，人工做费时费力。恰巧发现了wxpy可以实现让微信自动接收、处理消息然后进行回复的一系列功能。<br>   现总结记录如下：</p><h1 id="安装python，需要版本3以上"><a href="#安装python，需要版本3以上" class="headerlink" title="安装python，需要版本3以上"></a>安装python，需要版本3以上</h1><pre><code>yum install epel-releaseyum install python34</code></pre><h1 id="安装pip"><a href="#安装pip" class="headerlink" title="安装pip"></a>安装pip</h1><pre><code>yum install python34-setuptoolseasy_install-3.4 pip</code></pre><h1 id="安装wxpy"><a href="#安装wxpy" class="headerlink" title="安装wxpy"></a>安装wxpy</h1><pre><code>pip3 install -i https://pypi.doubanio.com/simple/ -U wxpy</code></pre><h1 id="使用python3，pycharm根据wxpy官网操作即可。"><a href="#使用python3，pycharm根据wxpy官网操作即可。" class="headerlink" title="使用python3，pycharm根据wxpy官网操作即可。"></a>使用python3，pycharm根据wxpy官网操作即可。</h1>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;   最近在做的项目，需要申请一些微信号进行营销工作，人工做费时费力。恰巧发现了wxpy可以实现让微信自动接收、处理消息然后进行回复的一系列功能。&lt;br&gt;   现总结记录如下：&lt;/p&gt;
+&lt;h1 id=&quot;安装python，需要版本3以上&quot;&gt;&lt;a href=&quot;#安装python
+      
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="微信" scheme="https://shenyihan.github.io/tags/%E5%BE%AE%E4%BF%A1/"/>
+    
+  </entry>
   
   <entry>
     <title>自律</title>
@@ -70,17 +96,17 @@
     <link href="https://shenyihan.github.io/2018/01/01/%E7%9F%AD%E7%BA%BF%E6%93%8D%E4%BD%9C/"/>
     <id>https://shenyihan.github.io/2018/01/01/短线操作/</id>
     <published>2018-01-01T01:56:16.000Z</published>
-    <updated>2018-01-12T09:44:05.638Z</updated>
+    <updated>2018-01-24T02:15:17.777Z</updated>
     
-    <content type="html"><![CDATA[<pre><code>此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，本人感觉能在波动中上涨就可以试试。20180111，买入：002208合肥城建 成交价：10:30，20180112，卖出-----------------------：10.69. 盈利仅供参考，据此操作盈亏自负。</code></pre>]]></content>
+    <content type="html"><![CDATA[<pre><code>此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，探索阶段，努力试错。20180111，买入：002208合肥城建 成交价：10:30，20180112，卖出-----------------------：10.69. 盈利58520180115，买入：002131利欧股份 成交价：2.81，20180115，买入：300465高伟达   成交价：9.96，20180116，卖出：300465高伟达   成交价：10.27，盈利43720180122, 卖出：002131利欧股份 成交价：2.74，亏损52120180124，买入：600992贵绳股份 成交价：11.45，仅供参考，据此操作盈亏自负。</code></pre>]]></content>
     
     <summary type="html">
     
       
       
         &lt;pre&gt;&lt;code&gt;此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。
-暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，本人感觉能在波动中上涨就可以试试。
-20180111，买入：002208合
+暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，探索阶段，努力试错。
+20180111，买入：002208合肥城建 成交价
       
     
     </summary>
@@ -97,16 +123,16 @@
     <link href="https://shenyihan.github.io/2017/12/30/PageName/"/>
     <id>https://shenyihan.github.io/2017/12/30/PageName/</id>
     <published>2017-12-30T05:38:58.000Z</published>
-    <updated>2018-01-11T06:28:41.537Z</updated>
+    <updated>2018-01-23T03:05:01.783Z</updated>
     
-    <content type="html"><![CDATA[<p>Zookeeper是一个协调服务，可以用它来作为配置维护、名字服务、分布式部署；<br>下面，我来分享一下在Linux下安装Zookeeper的整个步骤，让大家少走弯路。</p><p>一、Zookeeper下载<br>    wget <a href="http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz" target="_blank" rel="noopener">http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz</a></p><pre><code>[plain] view plain copy  print?[root@localhost 下载]# wget http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.3.6/zookeeper-3.3.6.tar.gz  --2016-01-15 23:15:57--  http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.3.6/zookeeper-3.3.6.tar.gz  正在解析主机 mirror.bit.edu.cn (mirror.bit.edu.cn)... 114.247.56.117  正在连接 mirror.bit.edu.cn (mirror.bit.edu.cn)|114.247.56.117|:80... 已连接。  已发出 HTTP 请求，正在等待回应... 200 OK  长度：11833706 (11M) [application/octet-stream]  正在保存至: “zookeeper-3.3.6.tar.gz”  100%[======================================================================================================================================================================================&gt;] 11,833,706   171KB/s 用时 68s      2016-01-15 23:17:07 (170 KB/s) - 已保存 “zookeeper-3.3.6.tar.gz” [11833706/11833706])  </code></pre><p>二、解压<br>    tar -zxvf /home/mgr/zookeeper-3.4.9.tar.gz<br>    [html] view plain copy  print?<br>    [root@localhost deploy]# tar -zxvf /home/lk/下载/zookeeper-3.3.6.tar.gz   </p><pre><code>解压完之后，会在deploy文件夹下面得到一个zookeeper-3.3.6的文件夹</code></pre><p>三、进入到conf目录</p><pre><code>[plain] view plain copy  print?[root@localhost deploy]# cd /opt/deploy/zookeeper-3.3.6/conf  </code></pre><p>四、拷贝zoo_samle.cfg为zoo.cfg</p><pre><code>[plain] view plain copy  print?[root@localhost conf]# cp zoo_sample.cfg zoo.cfg  </code></pre><p>五、编辑zoo.cfg文件</p><pre><code>[plain] view plain copy  print?[root@localhost conf]# vi zoo.cfg   修改为：[html] view plain copy  print?# The number of milliseconds of each tick  tickTime=2000  # The number of ticks that the initial  # synchronization phase can take  initLimit=10  # The number of ticks that can pass between  # sending a request and getting an acknowledgement  syncLimit=5  # the directory where the snapshot is stored.  dataDir=/usr/zookeeper  dataLogDir=/usr/zookeeper/log  # the port at which the clients will connect  clientPort=2181  server.1=192.168.32.129:2888:3888  </code></pre><p>六、设置环境变量<br>    export ZOOKEEPER_INSTALL=/home/mgr/zookeeper-3.4.9<br>    export PATH=$PATH:$ZOOKEEPER_INSTALL/bin<br>    [plain] view plain copy  print?<br>    [root@localhost conf]# export ZOOKEEPER_INSTALL=/opt/deploy/zookeeper-3.3.6<br>    [root@localhost conf]# export PATH=$PATH:$ZOOKEEPER_INSTALL/bin  </p><p>七、启动</p><pre><code>[plain] view plain copy  print?[root@localhost bin]# ./zkServer.sh start  JMX enabled by default  Using config: /opt/deploy/zookeeper-3.3.6/bin/../conf/zoo.cfg  Starting zookeeper ... STARTED  [root@localhost bin]#   </code></pre><p>八、测试zookeeper</p><pre><code>[plain] view plain copy  print?[root@localhost bin]# ./zkCli.sh -server 192.168.32.129:2181  如果是本地连接，那么不需要 -server 192.168.32.129:2181,默认是本地注意：如果出现拒绝连接，请检查如下：1、防火墙是否关闭  systemctl stop firewalld2、需要将192.168.32.129 映射到本地 /etc/hosts文件中，否则无法连接</code></pre><p>集群配置：<br>    在一个zookeeper集群中，只要半数以上的机器正常工作，整个集群即可处于正常工作的状态。<br>    例如：3台机器组成的集群，只要int(3/2)+1=2台机器正常工作即可。也就是说允许3台中的1台机器宕机</p><pre><code>1、设置vi  /etc/hosts加172.16.10.107 zookeeper-01172.16.10.164 zookeeper-02172.16.10.166 zookeeper-032、配置zoo.cfg 增加dataDir=/home/mgr/zookeeper-3.4.9/datadataLogDir=/home/mgr/zookeeper-3.4.9/logserver.1=zookeeper-01:2888:3888server.2=zookeeper-02:2888:3888server.3=zookeeper-03:2888:38883、在data下新建myid 内容分别为1/2/34、./zkServer.sh restart(重启)；./zkServer.sh status(查看状态)；./zkServer.sh stop(关闭)</code></pre>]]></content>
+    <content type="html"><![CDATA[<p>Zookeeper是一个协调服务，可以用它来作为配置维护、名字服务、分布式部署；<br>下面，我来分享一下在Linux下安装Zookeeper的整个步骤，让大家少走弯路。</p><h1 id="Zookeeper下载"><a href="#Zookeeper下载" class="headerlink" title="Zookeeper下载"></a>Zookeeper下载</h1><pre><code>wget http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.4.9/zookeeper-3.4.9.tar.gz[plain] view plain copy  print?[root@localhost 下载]# wget http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.3.6/zookeeper-3.3.6.tar.gz  --2016-01-15 23:15:57--  http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.3.6/zookeeper-3.3.6.tar.gz  正在解析主机 mirror.bit.edu.cn (mirror.bit.edu.cn)... 114.247.56.117  正在连接 mirror.bit.edu.cn (mirror.bit.edu.cn)|114.247.56.117|:80... 已连接。  已发出 HTTP 请求，正在等待回应... 200 OK  长度：11833706 (11M) [application/octet-stream]  正在保存至: “zookeeper-3.3.6.tar.gz”  100%[======================================================================================================================================================================================&gt;] 11,833,706   171KB/s 用时 68s      2016-01-15 23:17:07 (170 KB/s) - 已保存 “zookeeper-3.3.6.tar.gz” [11833706/11833706])  </code></pre><h1 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h1><pre><code>tar -zxvf /home/mgr/zookeeper-3.4.9.tar.gz[html] view plain copy  print?[root@localhost deploy]# tar -zxvf /home/lk/下载/zookeeper-3.3.6.tar.gz   解压完之后，会在deploy文件夹下面得到一个zookeeper-3.3.6的文件夹</code></pre><h1 id="进入到conf目录"><a href="#进入到conf目录" class="headerlink" title="进入到conf目录"></a>进入到conf目录</h1><pre><code>[plain] view plain copy  print?[root@localhost deploy]# cd /opt/deploy/zookeeper-3.3.6/conf  </code></pre><h1 id="拷贝zoo-samle-cfg为zoo-cfg"><a href="#拷贝zoo-samle-cfg为zoo-cfg" class="headerlink" title="拷贝zoo_samle.cfg为zoo.cfg"></a>拷贝zoo_samle.cfg为zoo.cfg</h1><pre><code>[plain] view plain copy  print?[root@localhost conf]# cp zoo_sample.cfg zoo.cfg  </code></pre><h1 id="编辑zoo-cfg文件"><a href="#编辑zoo-cfg文件" class="headerlink" title="编辑zoo.cfg文件"></a>编辑zoo.cfg文件</h1><pre><code>[plain] view plain copy  print?[root@localhost conf]# vi zoo.cfg   修改为：[html] view plain copy  print?# The number of milliseconds of each tick  tickTime=2000  # The number of ticks that the initial  # synchronization phase can take  initLimit=10  # The number of ticks that can pass between  # sending a request and getting an acknowledgement  syncLimit=5  # the directory where the snapshot is stored.  dataDir=/usr/zookeeper  dataLogDir=/usr/zookeeper/log  # the port at which the clients will connect  clientPort=2181  server.1=192.168.32.129:2888:3888  </code></pre><h1 id="设置环境变量"><a href="#设置环境变量" class="headerlink" title="设置环境变量"></a>设置环境变量</h1><pre><code>export ZOOKEEPER_INSTALL=/home/mgr/zookeeper-3.4.9export PATH=$PATH:$ZOOKEEPER_INSTALL/bin[plain] view plain copy  print?[root@localhost conf]# export ZOOKEEPER_INSTALL=/opt/deploy/zookeeper-3.3.6  [root@localhost conf]# export PATH=$PATH:$ZOOKEEPER_INSTALL/bin  </code></pre><h1 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h1><pre><code>[plain] view plain copy  print?[root@localhost bin]# ./zkServer.sh start  JMX enabled by default  Using config: /opt/deploy/zookeeper-3.3.6/bin/../conf/zoo.cfg  Starting zookeeper ... STARTED  [root@localhost bin]#   </code></pre><h1 id="测试zookeeper"><a href="#测试zookeeper" class="headerlink" title="测试zookeeper"></a>测试zookeeper</h1><pre><code>[plain] view plain copy  print?[root@localhost bin]# ./zkCli.sh -server 192.168.32.129:2181  如果是本地连接，那么不需要 -server 192.168.32.129:2181,默认是本地注意：如果出现拒绝连接，请检查如下：1、防火墙是否关闭  systemctl stop firewalld2、需要将192.168.32.129 映射到本地 /etc/hosts文件中，否则无法连接</code></pre><h1 id="集群配置："><a href="#集群配置：" class="headerlink" title="集群配置："></a>集群配置：</h1><pre><code>在一个zookeeper集群中，只要半数以上的机器正常工作，整个集群即可处于正常工作的状态。例如：3台机器组成的集群，只要int(3/2)+1=2台机器正常工作即可。也就是说允许3台中的1台机器宕机    1、设置vi  /etc/hosts加    172.16.10.107 zookeeper-01    172.16.10.164 zookeeper-02    172.16.10.166 zookeeper-03    2、配置zoo.cfg 增加    dataDir=/home/mgr/zookeeper-3.4.9/data    dataLogDir=/home/mgr/zookeeper-3.4.9/log    server.1=zookeeper-01:2888:3888    server.2=zookeeper-02:2888:3888    server.3=zookeeper-03:2888:3888    3、在data下新建myid 内容分别为1/2/3    4、./zkServer.sh restart(重启)；./zkServer.sh status(查看状态)；./zkServer.sh stop(关闭)</code></pre>]]></content>
     
     <summary type="html">
     
       
       
         &lt;p&gt;Zookeeper是一个协调服务，可以用它来作为配置维护、名字服务、分布式部署；&lt;br&gt;下面，我来分享一下在Linux下安装Zookeeper的整个步骤，让大家少走弯路。&lt;/p&gt;
-&lt;p&gt;一、Zookeeper下载&lt;br&gt;    wget &lt;a href=&quot;http://mi
+&lt;h1 id=&quot;Zookeeper下载&quot;&gt;&lt;a href=&quot;#Zookeeper下载&quot; cla
       
     
     </summary>
@@ -228,6 +254,42 @@
     
     
       <category term="博客搭建" scheme="https://shenyihan.github.io/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>about</title>
+    <link href="https://shenyihan.github.io/2017/12/20/about/"/>
+    <id>https://shenyihan.github.io/2017/12/20/about/</id>
+    <published>2017-12-20T07:37:01.000Z</published>
+    <updated>2018-01-16T08:08:31.264Z</updated>
+    
+    <content type="html"><![CDATA[<pre><code>全世界只有不到百万分之一的人访问我的博客，你真是个特别的人关于我： name：杨向成backgroud:攻城狮关于博客：扯淡、分享联系我：mail：yuren_88@126.com</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;pre&gt;&lt;code&gt;全世界只有不到百万分之一的人访问我的博客，你真是个特别的人
+
+关于我： 
+name：杨向成
+backgroud:攻城狮
+
+关于博客：
+扯淡、分享
+
+联系我：
+mail：yuren_88@126.com
+&lt;/code&gt;&lt;/pre&gt;
+      
+    
+    </summary>
+    
+      <category term="关于我" scheme="https://shenyihan.github.io/categories/%E5%85%B3%E4%BA%8E%E6%88%91/"/>
+    
+    
+      <category term="关于我" scheme="https://shenyihan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91/"/>
     
   </entry>
   
