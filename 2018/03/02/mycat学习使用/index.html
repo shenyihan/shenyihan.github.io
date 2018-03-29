@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+
+    
+
+    
+<!-- Baidu Tongji -->
+<script>var _hmt = _hmt || []</script>
+<script async src="//hm.baidu.com/hm.js?98d29320794cd90874c0fd344b013907"></script>
+<!-- End Baidu Tongji -->
+
+
+
+
+    <meta charset="utf-8">
+    
+    
+    <link rel="canonical" href="https://shenyihan.github.io//2018/03/02/mycat学习使用/">
+    
+    
+    <title>mycat学习使用 | 个人主页 | Life doesn’t get easier，you just get stronger</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="软件">
+    <meta name="description" content="安装 Mycat官网：http://www.mycat.io/可以了解下Mycat的背景和应用情况，这样使用起来比较有信心。 Mycat下载地址：http://dl.mycat.io/官网有个文档，属于详细的介绍，初次入门，看起来比较花时间。 下载：建议大家选择 1.6-RELEASE 版本，毕竟是比较稳定的版本。 安装：根据不同的系统选择不同的版本。包括linux、windows、mac,作者考">
+<meta name="keywords" content="软件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mycat学习使用">
+<meta property="og:url" content="https://shenyihan.github.io/2018/03/02/mycat学习使用/index.html">
+<meta property="og:site_name" content="个人主页">
+<meta property="og:description" content="安装 Mycat官网：http://www.mycat.io/可以了解下Mycat的背景和应用情况，这样使用起来比较有信心。 Mycat下载地址：http://dl.mycat.io/官网有个文档，属于详细的介绍，初次入门，看起来比较花时间。 下载：建议大家选择 1.6-RELEASE 版本，毕竟是比较稳定的版本。 安装：根据不同的系统选择不同的版本。包括linux、windows、mac,作者考">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-03-29T06:25:46.525Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="mycat学习使用">
+<meta name="twitter:description" content="安装 Mycat官网：http://www.mycat.io/可以了解下Mycat的背景和应用情况，这样使用起来比较有信心。 Mycat下载地址：http://dl.mycat.io/官网有个文档，属于详细的介绍，初次入门，看起来比较花时间。 下载：建议大家选择 1.6-RELEASE 版本，毕竟是比较稳定的版本。 安装：根据不同的系统选择不同的版本。包括linux、windows、mac,作者考">
+    
+        <link rel="alternate" type="application/atom+xml" title="个人主页" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+	
+    
+	
+    
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu"  >
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">杨向成</h5>
+          <a href="mailto:yuren_88@126.com" title="yuren_88@126.com" class="mail">yuren_88@126.com</a>
+        </hgroup>
+      </div>
+    </div>
+	
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/"  >
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives"  >
+                <i class="icon icon-lg icon-archives"></i>
+                文章
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags"  >
+                <i class="icon icon-lg icon-tags"></i>
+                标签
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories"  >
+                <i class="icon icon-lg icon-th-list"></i>
+                分类
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/books"  >
+                <i class="icon icon-lg icon-book"></i>
+                书籍
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/movies"  >
+                <i class="icon icon-lg icon-film"></i>
+                电影
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/2017/12/20/about/"  >
+                <i class="icon icon-lg icon-envelope"></i>
+                关于我
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/" target="_blank" >
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="http://www.weibo.com/" target="_blank" >
+                <i class="icon icon-lg icon-weibo"></i>
+                Weibo
+              </a>
+            </li>
+        
+
+      </ul>
+    </div>
+     <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=100% height=270 src="//music.163.com/outchain/player?type=0&id=2035127966&auto=0&height=250"></iframe>
+  </div>
+
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">mycat学习使用</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">mycat学习使用</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2018-03-02T07:17:44.000Z" itemprop="datePublished" class="page-time">
+  2018-03-02
+</time>
+
+
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/软件/">软件</a></li></ul>
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+<article id="post-mycat学习使用"
+  class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">mycat学习使用</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2018-03-02 15:17:44" datetime="2018-03-02T07:17:44.000Z"  itemprop="datePublished">2018-03-02</time>
+
+            
+	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/软件/">软件</a></li></ul>
+
+
+
+            
+<span id="busuanzi_container_page_pv" title="文章总阅读量" style='display:none'>
+    <i class="icon icon-eye icon-pr"></i><span id="busuanzi_value_page_pv"></span>
+</span>
+
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>安装</p>
+<p>Mycat官网：<a href="http://www.mycat.io/" target="_blank" rel="noopener">http://www.mycat.io/</a><br>可以了解下Mycat的背景和应用情况，这样使用起来比较有信心。</p>
+<p>Mycat下载地址：<a href="http://dl.mycat.io/" target="_blank" rel="noopener">http://dl.mycat.io/</a><br>官网有个文档，属于详细的介绍，初次入门，看起来比较花时间。</p>
+<p>下载：<br>建议大家选择 1.6-RELEASE 版本，毕竟是比较稳定的版本。</p>
+<p>安装：<br>根据不同的系统选择不同的版本。包括linux、windows、mac,作者考虑还是非常周全的，当然，也有源码版的。（ps:源码版的下载后，只要配置正确，就可以正常运行调试，这个赞一下。）</p>
+<p>Mycat的安装其实只要解压下载的目录就可以了，非常简单。<br>安装完成后，目录如下：</p>
+<p>目录    说明<br>bin    mycat命令，启动、重启、停止等<br>catlet    catlet为Mycat的一个扩展功能<br>conf    Mycat 配置信息,重点关注<br>lib    Mycat引用的jar包，Mycat是java开发的<br>logs    日志文件，包括Mycat启动的日志和运行的日志。<br>配置</p>
+<p>Mycat的配置文件都在conf目录里面，这里介绍几个常用的文件：</p>
+<p>文件    说明<br>server.xml    Mycat的配置文件，设置账号、参数等<br>schema.xml    Mycat对应的物理数据库和数据库表的配置<br>rule.xml    Mycat分片（分库分表）规则<br>Mycat的架构其实很好理解，Mycat是代理，Mycat后面就是物理数据库。和Web服务器的Nginx类似。对于使用者来说，访问的都是Mycat，不会接触到后端的数据库。<br>我们现在做一个主从、读写分离，简单分表的示例。结构如下图：</p>
+<p>服务器    IP    说明<br>Mycat    192.168.0.2    mycat服务器，连接数据库时，连接此服务器<br>database1    192.168.0.3    物理数据库1，真正存储数据的数据库<br>database2    192.168.0.4    物理数据库2，真正存储数据的数据库<br>Mycat作为主数据库中间件，肯定是与代码弱关联的，所以代码是不用修改的，使用Mycat后，连接数据库是不变的，默认端口是8066。连接方式和普通数据库一样，如：jdbc:mysql://192.168.0.2:8066/</p>
+<p>server.xml</p>
+<p>示例</p>
+<p><user name="test"><br>        <property name="password">test</property><br>        <property name="schemas">lunch</property><br>        <property name="readOnly">false</property>  </user></p>
+<pre><code>    &lt;!-- 表级 DML 权限设置 --&gt;
+    &lt;!--        
+    &lt;privileges check=&quot;false&quot;&gt;
+        &lt;schema name=&quot;TESTDB&quot; dml=&quot;0110&quot; &gt;
+            &lt;table name=&quot;tb01&quot; dml=&quot;0000&quot;&gt;&lt;/table&gt;
+            &lt;table name=&quot;tb02&quot; dml=&quot;1111&quot;&gt;&lt;/table&gt;
+        &lt;/schema&gt;
+    &lt;/privileges&gt;       
+     --&gt;
+&lt;/user&gt;
+</code></pre><p>重点关注下面这段，其他默认即可。</p>
+<p>参数    说明<br>user    用户配置节点<br>–name    登录的用户名，也就是连接Mycat的用户名<br>–password    登录的密码，也就是连接Mycat的密码<br>–schemas    数据库名，这里会和schema.xml中的配置关联，多个用逗号分开，例如需要这个用户需要管理两个数据库db1,db2，则配置db1,dbs<br>–privileges    配置用户针对表的增删改查的权限，具体见文档吧<br>我这里配置了一个账号test 密码也是test,针对数据库lunch,读写权限都有，没有针对表做任何特殊的权限。</p>
+<p>schema.xml<br>schema.xml是最主要的配置项，首先看我的配置文件。</p>
+<p>&lt;?xml version=”1.0”?&gt;<br>&lt;!DOCTYPE mycat:schema SYSTEM “schema.dtd”&gt;</p>
+<mycat:schema xmlns:mycat="http://io.mycat/">
+
+<!-- 数据库配置，与server.xml中的数据库对应 -->
+<pre><code>&lt;schema name=&quot;lunch&quot; checkSQLschema=&quot;false&quot; sqlMaxLimit=&quot;100&quot;&gt;
+    &lt;table name=&quot;lunchmenu&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;restaurant&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;userlunch&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;users&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;dictionary&quot; primaryKey=&quot;id&quot; autoIncrement=&quot;true&quot; dataNode=&quot;dn1,dn2&quot;  rule=&quot;mod-long&quot; /&gt;
+
+
+&lt;/schema&gt;
+</code></pre><!-- 分片配置 -->
+<pre><code>&lt;dataNode name=&quot;dn1&quot; dataHost=&quot;test1&quot; database=&quot;lunch&quot; /&gt;
+&lt;dataNode name=&quot;dn2&quot; dataHost=&quot;test2&quot; database=&quot;lunch&quot; /&gt;
+</code></pre><!-- 物理数据库配置 -->
+<pre><code>&lt;dataHost name=&quot;test1&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;0&quot;  writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot;&gt;
+    &lt;heartbeat&gt;select user();&lt;/heartbeat&gt;
+    &lt;writeHost host=&quot;hostM1&quot; url=&quot;192.168.0.2:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;  
+    &lt;/writeHost&gt;
+&lt;/dataHost&gt;
+
+&lt;dataHost name=&quot;test2&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;0&quot; writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot;&gt;
+    &lt;heartbeat&gt;select user();&lt;/heartbeat&gt;
+    &lt;writeHost host=&quot;hostS1&quot; url=&quot;192.168.0.3:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;  
+    &lt;/writeHost&gt;
+&lt;/dataHost&gt;
+</code></pre><p></p></mycat:schema><br>参数    说明<br>schema    数据库设置，此数据库为逻辑数据库，name与server.xml中schema对应<br>dataNode    分片信息，也就是分库相关配置<br>dataHost    物理数据库，真正存储数据的数据库<br>每个节点的属性逐一说明：<p></p>
+<p>schema:</p>
+<p>属性    说明<br>name    逻辑数据库名，与server.xml中的schema对应<br>checkSQLschema    数据库前缀相关设置，建议看文档，这里暂时设为folse<br>sqlMaxLimit    select 时默认的limit，避免查询全表<br>table:</p>
+<p>属性    说明<br>name    表名，物理数据库中表名<br>dataNode    表存储到哪些节点，多个节点用逗号分隔。节点为下文dataNode设置的name<br>primaryKey    主键字段名，自动生成主键时需要设置<br>autoIncrement    是否自增<br>rule    分片规则名，具体规则下文rule详细介绍<br>dataNode</p>
+<p>属性    说明<br>name    节点名，与table中dataNode对应<br>datahost    物理数据库名，与datahost中name对应<br>database    物理数据库中数据库名<br>dataHost</p>
+<p>属性    说明<br>name    物理数据库名，与dataNode中dataHost对应<br>balance    均衡负载的方式<br>writeType    写入方式<br>dbType    数据库类型<br>heartbeat    心跳检测语句，注意语句结尾的分号要加。<br>应用场景</p>
+<p>数据库分表分库</p>
+<p>配置如下：</p>
+<p>&lt;?xml version=”1.0”?&gt;<br>&lt;!DOCTYPE mycat:schema SYSTEM “schema.dtd”&gt;</p>
+<mycat:schema xmlns:mycat="http://io.mycat/">
+
+<!-- 数据库配置，与server.xml中的数据库对应 -->
+<pre><code>&lt;schema name=&quot;lunch&quot; checkSQLschema=&quot;false&quot; sqlMaxLimit=&quot;100&quot;&gt;
+    &lt;table name=&quot;lunchmenu&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;restaurant&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;userlunch&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;users&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;dictionary&quot; primaryKey=&quot;id&quot; autoIncrement=&quot;true&quot; dataNode=&quot;dn1,dn2&quot;  rule=&quot;mod-long&quot; /&gt;
+
+
+&lt;/schema&gt;
+</code></pre><!-- 分片配置 -->
+<pre><code>&lt;dataNode name=&quot;dn1&quot; dataHost=&quot;test1&quot; database=&quot;lunch&quot; /&gt;
+&lt;dataNode name=&quot;dn2&quot; dataHost=&quot;test2&quot; database=&quot;lunch&quot; /&gt;
+</code></pre><!-- 物理数据库配置 -->
+<pre><code>&lt;dataHost name=&quot;test1&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;0&quot;  writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot;&gt;
+    &lt;heartbeat&gt;select user();&lt;/heartbeat&gt;
+    &lt;writeHost host=&quot;hostM1&quot; url=&quot;192.168.0.2:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;  
+    &lt;/writeHost&gt;
+&lt;/dataHost&gt;
+
+&lt;dataHost name=&quot;test2&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;0&quot; writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot;&gt;
+    &lt;heartbeat&gt;select user();&lt;/heartbeat&gt;
+    &lt;writeHost host=&quot;hostS1&quot; url=&quot;192.168.0.3:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;  
+    &lt;/writeHost&gt;
+&lt;/dataHost&gt;
+</code></pre><p></p></mycat:schema><br>我在192.168.0.2、192.168.0.3均有数据库lunch。<br>lunchmenu、restaurant、userlunch、users这些表都只写入节点dn1，也就是192.168.0.2这个服务，而dictionary写入了dn1、dn2两个节点，也就是192.168.0.2、192.168.0.3这两台服务器。分片的规则为：mod-long。<br>主要关注rule属性，rule属性的内容来源于rule.xml这个文件，Mycat支持10种分表分库的规则，基本能满足你所需要的要求，这个必须赞一个，其他数据库中间件好像都没有这么多。<br>table中的rule属性对应的就是rule.xml文件中tableRule的name,具体有哪些分表和分库的实现，建议还是看下文档。我这里选择的mod-long就是将数据平均拆分。因为我后端是两台物理库，所以rule.xml中mod-long对应的function count为2，见下面部分代码：<p></p>
+<tablerule name="mod-long"><br>        <rule><br>            <columns>id</columns><br>            <algorithm>mod-long</algorithm><br>        </rule><br>    </tablerule>
+
+<p><function name="mod-long" class="io.mycat.route.function.PartitionByMod"><br>        <!-- how many data nodes --><br>        <property name="count">2</property><br>    </function><br>数据库读写分离</p>
+<p>配置如下：</p>
+<p>&lt;?xml version=”1.0”?&gt;<br>&lt;!DOCTYPE mycat:schema SYSTEM “schema.dtd”&gt;</p>
+<mycat:schema xmlns:mycat="http://io.mycat/">
+
+<!-- 数据库配置，与server.xml中的数据库对应 -->
+<pre><code>&lt;schema name=&quot;lunch&quot; checkSQLschema=&quot;false&quot; sqlMaxLimit=&quot;100&quot;&gt;
+    &lt;table name=&quot;lunchmenu&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;restaurant&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;userlunch&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;users&quot; dataNode=&quot;dn1&quot;  /&gt;
+    &lt;table name=&quot;dictionary&quot; primaryKey=&quot;id&quot; autoIncrement=&quot;true&quot; dataNode=&quot;dn1&quot;  /&gt;
+
+
+&lt;/schema&gt;
+</code></pre><!-- 分片配置 -->
+<pre><code>&lt;dataNode name=&quot;dn1&quot; dataHost=&quot;test1&quot; database=&quot;lunch&quot; /&gt;
+</code></pre><!-- 物理数据库配置 -->
+<pre><code>&lt;dataHost name=&quot;test1&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;1&quot;  writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot;&gt;
+    &lt;heartbeat&gt;select user();&lt;/heartbeat&gt;
+    &lt;writeHost host=&quot;hostM1&quot; url=&quot;192.168.0.2:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;  
+    &lt;readHost host=&quot;hostM1&quot; url=&quot;192.168.0.3:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;   
+    &lt;/readHost&gt;
+    &lt;/writeHost&gt;
+&lt;/dataHost&gt;
+</code></pre><p></p></mycat:schema><br>这样的配置与前一个示例配置改动如下：<br>删除了table分配的规则,以及datanode只有一个<br>datahost也只有一台，但是writehost总添加了readhost,balance改为1，表示读写分离。<br>以上配置达到的效果就是102.168.0.2为主库，192.168.0.3为从库。<p></p>
+<p>注意：Mycat主从分离只是在读的时候做了处理，写入数据的时候，只会写入到writehost，需要通过mycat的主从复制将数据复制到readhost，这个问题当时候我纠结了好久，数据写入writehost后，readhost一直没有数据，以为是自己配置的问题，后面才发现Mycat就没有实现主从复制的功能，毕竟数据库本身自带的这个功能才是最高效稳定的。</p>
+<p>至于其他的场景，如同时主从和分表分库也是支持的了，只要了解这个实现以后再去修改配置，都是可以实现的。而热备及故障专业官方推荐使用haproxy配合一起使用，大家可以试试。<br>使用</p>
+<p>Mycat的启动也很简单，启动命令在Bin目录：</p>
+<p>##启动<br>mycat start</p>
+<p>##停止<br>mycat stop</p>
+<p>##重启<br>mycat restart<br>如果在启动时发现异常，在logs目录中查看日志。</p>
+<p>wrapper.log 为程序启动的日志，启动时的问题看这个<br>mycat.log 为脚本执行时的日志，SQL脚本执行报错后的具体错误内容,查看这个文件。mycat.log是最新的错误日志，历史日志会根据时间生成目录保存。<br>mycat启动后，执行命令不成功，可能实际上配置有错误，导致后面的命令没有很好的执行。</p>
+<p>Mycat带来的最大好处就是使用是完全不用修改原有代码的，在mycat通过命令启动后，你只需要将数据库连接切换到Mycat的地址就可以了。如下面就可以进行连接了：</p>
+<p> mysql -h192.168.0.1 -P8806 -uroot -p123456<br>连接成功后可以执行sql脚本了。<br>所以，可以直接通过sql管理工具（如：navicat、datagrip）连接，执行脚本。我一直用datagrip来进行日常简单的管理，这个很方便。</p>
+<p>Mycat还有一个管理的连接，端口号是9906.</p>
+<p> mysql -h192.168.0.1 -P9906 -uroot -p123456<br>连接后可以根据管理命令查看Mycat的运行情况，当然，喜欢UI管理方式的人，可以安装一个Mycat-Web来进行管理，有兴趣自行搜索。</p>
+<p>简而言之，开发中使用Mycat和直接使用Mysql机会没有差别。</p>
+<p>常见问题</p>
+<p>使用Mycat后总会遇到一些坑，我将自己遇到的一些问题在这里列一下，希望能与大家有共鸣：</p>
+<p>Mycat是不是配置以后，就能完全解决分表分库和读写分离问题？<br>Mycat配合数据库本身的复制功能，可以解决读写分离的问题，但是针对分表分库的问题，不是完美的解决。或者说，至今为止，业界没有完美的解决方案。<br>分表分库写入能完美解决，但是，不能完美解决主要是联表查询的问题，Mycat支持两个表联表的查询，多余两个表的查询不支持。 其实，很多数据库中间件关于分表分库后查询的问题，都是需要自己实现的，而且节本都不支持联表查询，Mycat已经算做地非常先进了。<br>分表分库的后联表查询问题，大家通过合理数据库设计来避免。</p>
+<p>Mycat支持哪些数据库，其他平台如 .net、PHP能用吗？<br>官方说了，支持的数据库包括MySQL、SQL Server、Oracle、DB2、PostgreSQL 等主流数据库，很赞。<br>尽量用Mysql,我试过SQL Server，会有些小问题，因为部分语法有点差异。</p>
+<p>Mycat 非JAVA平台如 .net、PHP能用吗？<br>可以用。这一点MyCat做的也很棒。</p>
+<p>参考</p>
+<p>《Mycat权威指南》： <a href="http://www.mycat.io/document/Mycat_V1.6.0.pdf" target="_blank" rel="noopener">http://www.mycat.io/document/Mycat_V1.6.0.pdf</a><br>官网 ：<a href="http://www.mycat.io/" target="_blank" rel="noopener">http://www.mycat.io/</a></p>
+
+        </div>
+
+        <blockquote class="post-copyright">
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2018-03-29T06:25:46.525Z" itemprop="dateUpdated">2018-03-29 14:25:46</time>
+</span><br>
+
+
+        
+        坚持原创技术分享，您的支持将鼓励我继续创作！，<a href="/2018/03/02/mycat学习使用/" target="_blank" rel="external">https://shenyihan.github.io/2018/03/02/mycat学习使用/</a>
+        
+    </div>
+    <footer>
+        <a href="https://shenyihan.github.io">
+            <img src="/img/avatar.jpg" alt="杨向成">
+            杨向成
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件/">软件</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://shenyihan.github.io/2018/03/02/mycat学习使用/&title=《mycat学习使用》 — 个人主页&pic=https://shenyihan.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://shenyihan.github.io/2018/03/02/mycat学习使用/&title=《mycat学习使用》 — 个人主页&source=Life doesn’t get easier，you just get stronger" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://shenyihan.github.io/2018/03/02/mycat学习使用/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mycat学习使用》 — 个人主页&url=https://shenyihan.github.io/2018/03/02/mycat学习使用/&via=https://shenyihan.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://shenyihan.github.io/2018/03/02/mycat学习使用/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2018/02/02/2018读书/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">2018读书</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzE5Mi85NzQ5">
+	<script type="text/javascript">
+   (function(d, s) {
+       var j, e = d.getElementsByTagName(s)[0];
+
+       if (typeof LivereTower === 'function') { return; }
+
+       j = d.createElement(s);
+       j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+       j.async = true;
+
+       e.parentNode.insertBefore(j, e);
+   })(document, 'script');
+	</script>
+<noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+</div>
+<!-- City版安装代码已完成 -->
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/alipay.jpg" alt="打赏二维码">
+        </div>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+<p>
+    <span id="busuanzi_container_site_uv" style='display:none'>
+        站点总访客数：<span id="busuanzi_value_site_uv"></span>
+    </span>
+    <span id="busuanzi_container_site_pv" style='display:none'>
+        站点总访问量：<span id="busuanzi_value_site_pv"></span>
+    </span>
+</p>
+
+
+        
+    </div>
+    <div class="bottom">
+        <p><span>杨向成 &copy; 2017 - 2018</span>
+            <span>
+                
+                <a href="http://www.miitbeian.gov.cn/" target="_blank">京ICP备1234556号</a><br>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://shenyihan.github.io/2018/03/02/mycat学习使用/&title=《mycat学习使用》 — 个人主页&pic=https://shenyihan.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://shenyihan.github.io/2018/03/02/mycat学习使用/&title=《mycat学习使用》 — 个人主页&source=Life doesn’t get easier，you just get stronger" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://shenyihan.github.io/2018/03/02/mycat学习使用/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《mycat学习使用》 — 个人主页&url=https://shenyihan.github.io/2018/03/02/mycat学习使用/&via=https://shenyihan.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://shenyihan.github.io/2018/03/02/mycat学习使用/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACMElEQVR42u3auxKDMAxEUf7/p0mbAju7K5MZy5cqQ3gdCiHJui55u7+20f7vf0fHj67snhVuMGDA2JZxT7fRDUb/usfor2N+BRgwYJzAUELhPAQr7Pnxyn2H+2HAgAFDDqMVGAwYMGCsDbjSpeV6UwnKMGDAgKGHTv1cpX2mBNzFtTgMGDA2ZOgh8v+/X1nfgAEDxlaM29wqCd+qwP1wFxgwYLRmuAWq+0CVFNAe/oABA0ZTRjYkoZem+oCF+wrCSA8DBowNGe6DGm16ORBXllEfvhswYMBox1AWA9ziVtmfpY9XFt1hwIDRiOEuDOhDEnq5u2DMAgYMGO0YevrlFrr1/fbrhgEDRlPGPMDpAxBZW81dEhg+IQwYMFozsoZ+1vqvfBP00AwDBox+DD3gZkEwSzTtYQ4YMGC0ZqxtpdUTPr3FBgMGjHMYbvhTlh71c42M1R22gAEDRlNGOFMmU7NRD6mshQEDRmtGvbnvgrMQby9nwoABox2jNKkhN8jqReyPI2HAgHEMIxv8chNEZcHAbfDBgAHjHEZWmroPoQdx5ZMAAwaMcxirUr1VRaz9QmHAgNGUcZtbZTxCB9tUGDBgtGZkydkcaQxJmA24eooJAwaMfRlukK0Xn1n6+COsw4AB4wCGG/iUYbKsPVcqZWHAgAFj0ZhFfSwsfAgYMGAcw5injzpJuaZxJAwYMA5gKEVsfXhLv/KL7TYYMGBsyNBLR7e574bsbHkABgwYrRkfwfsi4FGhReoAAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+<script>
+(function() {
+    var OriginTitile = document.title, titleTime;
+    document.addEventListener('visibilitychange', function() {
+        if (document.hidden) {
+            document.title = '你快回来 我一人承受不来！';
+            clearTimeout(titleTime);
+        } else {
+            document.title = '(つェ⊂)咦!又好了!';
+            titleTime = setTimeout(function() {
+                document.title = OriginTitile;
+            },2000);
+        }
+    });
+})();
+</script>
+
+
+
+</body>
+</html>

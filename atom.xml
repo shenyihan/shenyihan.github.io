@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shenyihan.github.io/"/>
-  <updated>2018-01-23T03:03:27.052Z</updated>
+  <updated>2018-03-29T06:25:46.525Z</updated>
   <id>https://shenyihan.github.io/</id>
   
   <author>
@@ -15,6 +15,57 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>mycat学习使用</title>
+    <link href="https://shenyihan.github.io/2018/03/02/mycat%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/"/>
+    <id>https://shenyihan.github.io/2018/03/02/mycat学习使用/</id>
+    <published>2018-03-02T07:17:44.000Z</published>
+    <updated>2018-03-29T06:25:46.525Z</updated>
+    
+    <content type="html"><![CDATA[<p>安装</p><p>Mycat官网：<a href="http://www.mycat.io/" target="_blank" rel="noopener">http://www.mycat.io/</a><br>可以了解下Mycat的背景和应用情况，这样使用起来比较有信心。</p><p>Mycat下载地址：<a href="http://dl.mycat.io/" target="_blank" rel="noopener">http://dl.mycat.io/</a><br>官网有个文档，属于详细的介绍，初次入门，看起来比较花时间。</p><p>下载：<br>建议大家选择 1.6-RELEASE 版本，毕竟是比较稳定的版本。</p><p>安装：<br>根据不同的系统选择不同的版本。包括linux、windows、mac,作者考虑还是非常周全的，当然，也有源码版的。（ps:源码版的下载后，只要配置正确，就可以正常运行调试，这个赞一下。）</p><p>Mycat的安装其实只要解压下载的目录就可以了，非常简单。<br>安装完成后，目录如下：</p><p>目录    说明<br>bin    mycat命令，启动、重启、停止等<br>catlet    catlet为Mycat的一个扩展功能<br>conf    Mycat 配置信息,重点关注<br>lib    Mycat引用的jar包，Mycat是java开发的<br>logs    日志文件，包括Mycat启动的日志和运行的日志。<br>配置</p><p>Mycat的配置文件都在conf目录里面，这里介绍几个常用的文件：</p><p>文件    说明<br>server.xml    Mycat的配置文件，设置账号、参数等<br>schema.xml    Mycat对应的物理数据库和数据库表的配置<br>rule.xml    Mycat分片（分库分表）规则<br>Mycat的架构其实很好理解，Mycat是代理，Mycat后面就是物理数据库。和Web服务器的Nginx类似。对于使用者来说，访问的都是Mycat，不会接触到后端的数据库。<br>我们现在做一个主从、读写分离，简单分表的示例。结构如下图：</p><p>服务器    IP    说明<br>Mycat    192.168.0.2    mycat服务器，连接数据库时，连接此服务器<br>database1    192.168.0.3    物理数据库1，真正存储数据的数据库<br>database2    192.168.0.4    物理数据库2，真正存储数据的数据库<br>Mycat作为主数据库中间件，肯定是与代码弱关联的，所以代码是不用修改的，使用Mycat后，连接数据库是不变的，默认端口是8066。连接方式和普通数据库一样，如：jdbc:mysql://192.168.0.2:8066/</p><p>server.xml</p><p>示例</p><p><user name="test"><br>        <property name="password">test</property><br>        <property name="schemas">lunch</property><br>        <property name="readOnly">false</property>  </user></p><pre><code>    &lt;!-- 表级 DML 权限设置 --&gt;    &lt;!--            &lt;privileges check=&quot;false&quot;&gt;        &lt;schema name=&quot;TESTDB&quot; dml=&quot;0110&quot; &gt;            &lt;table name=&quot;tb01&quot; dml=&quot;0000&quot;&gt;&lt;/table&gt;            &lt;table name=&quot;tb02&quot; dml=&quot;1111&quot;&gt;&lt;/table&gt;        &lt;/schema&gt;    &lt;/privileges&gt;            --&gt;&lt;/user&gt;</code></pre><p>重点关注下面这段，其他默认即可。</p><p>参数    说明<br>user    用户配置节点<br>–name    登录的用户名，也就是连接Mycat的用户名<br>–password    登录的密码，也就是连接Mycat的密码<br>–schemas    数据库名，这里会和schema.xml中的配置关联，多个用逗号分开，例如需要这个用户需要管理两个数据库db1,db2，则配置db1,dbs<br>–privileges    配置用户针对表的增删改查的权限，具体见文档吧<br>我这里配置了一个账号test 密码也是test,针对数据库lunch,读写权限都有，没有针对表做任何特殊的权限。</p><p>schema.xml<br>schema.xml是最主要的配置项，首先看我的配置文件。</p><p>&lt;?xml version=”1.0”?&gt;<br>&lt;!DOCTYPE mycat:schema SYSTEM “schema.dtd”&gt;</p><mycat:schema xmlns:mycat="http://io.mycat/"><!-- 数据库配置，与server.xml中的数据库对应 --><pre><code>&lt;schema name=&quot;lunch&quot; checkSQLschema=&quot;false&quot; sqlMaxLimit=&quot;100&quot;&gt;    &lt;table name=&quot;lunchmenu&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;restaurant&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;userlunch&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;users&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;dictionary&quot; primaryKey=&quot;id&quot; autoIncrement=&quot;true&quot; dataNode=&quot;dn1,dn2&quot;  rule=&quot;mod-long&quot; /&gt;&lt;/schema&gt;</code></pre><!-- 分片配置 --><pre><code>&lt;dataNode name=&quot;dn1&quot; dataHost=&quot;test1&quot; database=&quot;lunch&quot; /&gt;&lt;dataNode name=&quot;dn2&quot; dataHost=&quot;test2&quot; database=&quot;lunch&quot; /&gt;</code></pre><!-- 物理数据库配置 --><pre><code>&lt;dataHost name=&quot;test1&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;0&quot;  writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot;&gt;    &lt;heartbeat&gt;select user();&lt;/heartbeat&gt;    &lt;writeHost host=&quot;hostM1&quot; url=&quot;192.168.0.2:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;      &lt;/writeHost&gt;&lt;/dataHost&gt;&lt;dataHost name=&quot;test2&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;0&quot; writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot;&gt;    &lt;heartbeat&gt;select user();&lt;/heartbeat&gt;    &lt;writeHost host=&quot;hostS1&quot; url=&quot;192.168.0.3:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;      &lt;/writeHost&gt;&lt;/dataHost&gt;</code></pre><p></p></mycat:schema><br>参数    说明<br>schema    数据库设置，此数据库为逻辑数据库，name与server.xml中schema对应<br>dataNode    分片信息，也就是分库相关配置<br>dataHost    物理数据库，真正存储数据的数据库<br>每个节点的属性逐一说明：<p></p><p>schema:</p><p>属性    说明<br>name    逻辑数据库名，与server.xml中的schema对应<br>checkSQLschema    数据库前缀相关设置，建议看文档，这里暂时设为folse<br>sqlMaxLimit    select 时默认的limit，避免查询全表<br>table:</p><p>属性    说明<br>name    表名，物理数据库中表名<br>dataNode    表存储到哪些节点，多个节点用逗号分隔。节点为下文dataNode设置的name<br>primaryKey    主键字段名，自动生成主键时需要设置<br>autoIncrement    是否自增<br>rule    分片规则名，具体规则下文rule详细介绍<br>dataNode</p><p>属性    说明<br>name    节点名，与table中dataNode对应<br>datahost    物理数据库名，与datahost中name对应<br>database    物理数据库中数据库名<br>dataHost</p><p>属性    说明<br>name    物理数据库名，与dataNode中dataHost对应<br>balance    均衡负载的方式<br>writeType    写入方式<br>dbType    数据库类型<br>heartbeat    心跳检测语句，注意语句结尾的分号要加。<br>应用场景</p><p>数据库分表分库</p><p>配置如下：</p><p>&lt;?xml version=”1.0”?&gt;<br>&lt;!DOCTYPE mycat:schema SYSTEM “schema.dtd”&gt;</p><mycat:schema xmlns:mycat="http://io.mycat/"><!-- 数据库配置，与server.xml中的数据库对应 --><pre><code>&lt;schema name=&quot;lunch&quot; checkSQLschema=&quot;false&quot; sqlMaxLimit=&quot;100&quot;&gt;    &lt;table name=&quot;lunchmenu&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;restaurant&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;userlunch&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;users&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;dictionary&quot; primaryKey=&quot;id&quot; autoIncrement=&quot;true&quot; dataNode=&quot;dn1,dn2&quot;  rule=&quot;mod-long&quot; /&gt;&lt;/schema&gt;</code></pre><!-- 分片配置 --><pre><code>&lt;dataNode name=&quot;dn1&quot; dataHost=&quot;test1&quot; database=&quot;lunch&quot; /&gt;&lt;dataNode name=&quot;dn2&quot; dataHost=&quot;test2&quot; database=&quot;lunch&quot; /&gt;</code></pre><!-- 物理数据库配置 --><pre><code>&lt;dataHost name=&quot;test1&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;0&quot;  writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot;&gt;    &lt;heartbeat&gt;select user();&lt;/heartbeat&gt;    &lt;writeHost host=&quot;hostM1&quot; url=&quot;192.168.0.2:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;      &lt;/writeHost&gt;&lt;/dataHost&gt;&lt;dataHost name=&quot;test2&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;0&quot; writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot;&gt;    &lt;heartbeat&gt;select user();&lt;/heartbeat&gt;    &lt;writeHost host=&quot;hostS1&quot; url=&quot;192.168.0.3:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;      &lt;/writeHost&gt;&lt;/dataHost&gt;</code></pre><p></p></mycat:schema><br>我在192.168.0.2、192.168.0.3均有数据库lunch。<br>lunchmenu、restaurant、userlunch、users这些表都只写入节点dn1，也就是192.168.0.2这个服务，而dictionary写入了dn1、dn2两个节点，也就是192.168.0.2、192.168.0.3这两台服务器。分片的规则为：mod-long。<br>主要关注rule属性，rule属性的内容来源于rule.xml这个文件，Mycat支持10种分表分库的规则，基本能满足你所需要的要求，这个必须赞一个，其他数据库中间件好像都没有这么多。<br>table中的rule属性对应的就是rule.xml文件中tableRule的name,具体有哪些分表和分库的实现，建议还是看下文档。我这里选择的mod-long就是将数据平均拆分。因为我后端是两台物理库，所以rule.xml中mod-long对应的function count为2，见下面部分代码：<p></p><tablerule name="mod-long"><br>        <rule><br>            <columns>id</columns><br>            <algorithm>mod-long</algorithm><br>        </rule><br>    </tablerule><p><function name="mod-long" class="io.mycat.route.function.PartitionByMod"><br>        <!-- how many data nodes --><br>        <property name="count">2</property><br>    </function><br>数据库读写分离</p><p>配置如下：</p><p>&lt;?xml version=”1.0”?&gt;<br>&lt;!DOCTYPE mycat:schema SYSTEM “schema.dtd”&gt;</p><mycat:schema xmlns:mycat="http://io.mycat/"><!-- 数据库配置，与server.xml中的数据库对应 --><pre><code>&lt;schema name=&quot;lunch&quot; checkSQLschema=&quot;false&quot; sqlMaxLimit=&quot;100&quot;&gt;    &lt;table name=&quot;lunchmenu&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;restaurant&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;userlunch&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;users&quot; dataNode=&quot;dn1&quot;  /&gt;    &lt;table name=&quot;dictionary&quot; primaryKey=&quot;id&quot; autoIncrement=&quot;true&quot; dataNode=&quot;dn1&quot;  /&gt;&lt;/schema&gt;</code></pre><!-- 分片配置 --><pre><code>&lt;dataNode name=&quot;dn1&quot; dataHost=&quot;test1&quot; database=&quot;lunch&quot; /&gt;</code></pre><!-- 物理数据库配置 --><pre><code>&lt;dataHost name=&quot;test1&quot; maxCon=&quot;1000&quot; minCon=&quot;10&quot; balance=&quot;1&quot;  writeType=&quot;0&quot; dbType=&quot;mysql&quot; dbDriver=&quot;native&quot;&gt;    &lt;heartbeat&gt;select user();&lt;/heartbeat&gt;    &lt;writeHost host=&quot;hostM1&quot; url=&quot;192.168.0.2:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;      &lt;readHost host=&quot;hostM1&quot; url=&quot;192.168.0.3:3306&quot; user=&quot;root&quot; password=&quot;123456&quot;&gt;       &lt;/readHost&gt;    &lt;/writeHost&gt;&lt;/dataHost&gt;</code></pre><p></p></mycat:schema><br>这样的配置与前一个示例配置改动如下：<br>删除了table分配的规则,以及datanode只有一个<br>datahost也只有一台，但是writehost总添加了readhost,balance改为1，表示读写分离。<br>以上配置达到的效果就是102.168.0.2为主库，192.168.0.3为从库。<p></p><p>注意：Mycat主从分离只是在读的时候做了处理，写入数据的时候，只会写入到writehost，需要通过mycat的主从复制将数据复制到readhost，这个问题当时候我纠结了好久，数据写入writehost后，readhost一直没有数据，以为是自己配置的问题，后面才发现Mycat就没有实现主从复制的功能，毕竟数据库本身自带的这个功能才是最高效稳定的。</p><p>至于其他的场景，如同时主从和分表分库也是支持的了，只要了解这个实现以后再去修改配置，都是可以实现的。而热备及故障专业官方推荐使用haproxy配合一起使用，大家可以试试。<br>使用</p><p>Mycat的启动也很简单，启动命令在Bin目录：</p><p>##启动<br>mycat start</p><p>##停止<br>mycat stop</p><p>##重启<br>mycat restart<br>如果在启动时发现异常，在logs目录中查看日志。</p><p>wrapper.log 为程序启动的日志，启动时的问题看这个<br>mycat.log 为脚本执行时的日志，SQL脚本执行报错后的具体错误内容,查看这个文件。mycat.log是最新的错误日志，历史日志会根据时间生成目录保存。<br>mycat启动后，执行命令不成功，可能实际上配置有错误，导致后面的命令没有很好的执行。</p><p>Mycat带来的最大好处就是使用是完全不用修改原有代码的，在mycat通过命令启动后，你只需要将数据库连接切换到Mycat的地址就可以了。如下面就可以进行连接了：</p><p> mysql -h192.168.0.1 -P8806 -uroot -p123456<br>连接成功后可以执行sql脚本了。<br>所以，可以直接通过sql管理工具（如：navicat、datagrip）连接，执行脚本。我一直用datagrip来进行日常简单的管理，这个很方便。</p><p>Mycat还有一个管理的连接，端口号是9906.</p><p> mysql -h192.168.0.1 -P9906 -uroot -p123456<br>连接后可以根据管理命令查看Mycat的运行情况，当然，喜欢UI管理方式的人，可以安装一个Mycat-Web来进行管理，有兴趣自行搜索。</p><p>简而言之，开发中使用Mycat和直接使用Mysql机会没有差别。</p><p>常见问题</p><p>使用Mycat后总会遇到一些坑，我将自己遇到的一些问题在这里列一下，希望能与大家有共鸣：</p><p>Mycat是不是配置以后，就能完全解决分表分库和读写分离问题？<br>Mycat配合数据库本身的复制功能，可以解决读写分离的问题，但是针对分表分库的问题，不是完美的解决。或者说，至今为止，业界没有完美的解决方案。<br>分表分库写入能完美解决，但是，不能完美解决主要是联表查询的问题，Mycat支持两个表联表的查询，多余两个表的查询不支持。 其实，很多数据库中间件关于分表分库后查询的问题，都是需要自己实现的，而且节本都不支持联表查询，Mycat已经算做地非常先进了。<br>分表分库的后联表查询问题，大家通过合理数据库设计来避免。</p><p>Mycat支持哪些数据库，其他平台如 .net、PHP能用吗？<br>官方说了，支持的数据库包括MySQL、SQL Server、Oracle、DB2、PostgreSQL 等主流数据库，很赞。<br>尽量用Mysql,我试过SQL Server，会有些小问题，因为部分语法有点差异。</p><p>Mycat 非JAVA平台如 .net、PHP能用吗？<br>可以用。这一点MyCat做的也很棒。</p><p>参考</p><p>《Mycat权威指南》： <a href="http://www.mycat.io/document/Mycat_V1.6.0.pdf" target="_blank" rel="noopener">http://www.mycat.io/document/Mycat_V1.6.0.pdf</a><br>官网 ：<a href="http://www.mycat.io/" target="_blank" rel="noopener">http://www.mycat.io/</a></p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;安装&lt;/p&gt;
+&lt;p&gt;Mycat官网：&lt;a href=&quot;http://www.mycat.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;http://www.mycat.io/&lt;/a&gt;&lt;br&gt;可以了解下Mycat的背景和应用情况，这样使用起来比较有信
+      
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="软件" scheme="https://shenyihan.github.io/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>2018读书</title>
+    <link href="https://shenyihan.github.io/2018/02/02/2018%E8%AF%BB%E4%B9%A6/"/>
+    <id>https://shenyihan.github.io/2018/02/02/2018读书/</id>
+    <published>2018-02-02T07:17:44.000Z</published>
+    <updated>2018-02-02T07:18:43.428Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="金字塔原理"><a href="#金字塔原理" class="headerlink" title="金字塔原理"></a>金字塔原理</h1>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;金字塔原理&quot;&gt;&lt;a href=&quot;#金字塔原理&quot; class=&quot;headerlink&quot; title=&quot;金字塔原理&quot;&gt;&lt;/a&gt;金字塔原理&lt;/h1&gt;
+      
+    
+    </summary>
+    
+      <category term="读书" scheme="https://shenyihan.github.io/categories/%E8%AF%BB%E4%B9%A6/"/>
+    
+    
+      <category term="读书" scheme="https://shenyihan.github.io/tags/%E8%AF%BB%E4%B9%A6/"/>
+    
+  </entry>
   
   <entry>
     <title>微信机器人</title>
@@ -92,13 +143,39 @@
   </entry>
   
   <entry>
+    <title>理论剖析</title>
+    <link href="https://shenyihan.github.io/2018/01/01/%E7%90%86%E8%AE%BA%E5%89%96%E6%9E%90/"/>
+    <id>https://shenyihan.github.io/2018/01/01/理论剖析/</id>
+    <published>2018-01-01T01:56:16.000Z</published>
+    <updated>2018-02-27T02:10:38.060Z</updated>
+    
+    <content type="html"><![CDATA[<p>总结一些著名理论的适用场景</p><h1 id="江恩理论"><a href="#江恩理论" class="headerlink" title="江恩理论"></a>江恩理论</h1><h2 id="关注两种时间周期：对等周期和对等循环周期"><a href="#关注两种时间周期：对等周期和对等循环周期" class="headerlink" title="关注两种时间周期：对等周期和对等循环周期"></a>关注两种时间周期：对等周期和对等循环周期</h2><pre><code>对等周期：下跌和上涨时间（所用交易日）相同对等循环周期：选定一组高低点，在这组高低点的区间内又有很多的高低点，区间内第一个高低点距离区间左临界位交易日个数为8T，则区间右临界位+8即为变盘点（顶或底）；</code></pre><h1 id="龙虎榜的重要性"><a href="#龙虎榜的重要性" class="headerlink" title="龙虎榜的重要性"></a>龙虎榜的重要性</h1><h2 id="例如说佛山普澜二路证券营业部"><a href="#例如说佛山普澜二路证券营业部" class="headerlink" title="例如说佛山普澜二路证券营业部"></a>例如说佛山普澜二路证券营业部</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;总结一些著名理论的适用场景&lt;/p&gt;
+&lt;h1 id=&quot;江恩理论&quot;&gt;&lt;a href=&quot;#江恩理论&quot; class=&quot;headerlink&quot; title=&quot;江恩理论&quot;&gt;&lt;/a&gt;江恩理论&lt;/h1&gt;&lt;h2 id=&quot;关注两种时间周期：对等周期和对等循环周期&quot;&gt;&lt;a href=&quot;#关注两种
+      
+    
+    </summary>
+    
+      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
+    
+    
+      <category term="股票操作" scheme="https://shenyihan.github.io/tags/%E8%82%A1%E7%A5%A8%E6%93%8D%E4%BD%9C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>短线操作</title>
     <link href="https://shenyihan.github.io/2018/01/01/%E7%9F%AD%E7%BA%BF%E6%93%8D%E4%BD%9C/"/>
     <id>https://shenyihan.github.io/2018/01/01/短线操作/</id>
     <published>2018-01-01T01:56:16.000Z</published>
-    <updated>2018-01-24T02:15:17.777Z</updated>
+    <updated>2018-02-01T08:44:27.575Z</updated>
     
-    <content type="html"><![CDATA[<pre><code>此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，探索阶段，努力试错。20180111，买入：002208合肥城建 成交价：10:30，20180112，卖出-----------------------：10.69. 盈利58520180115，买入：002131利欧股份 成交价：2.81，20180115，买入：300465高伟达   成交价：9.96，20180116，卖出：300465高伟达   成交价：10.27，盈利43720180122, 卖出：002131利欧股份 成交价：2.74，亏损52120180124，买入：600992贵绳股份 成交价：11.45，仅供参考，据此操作盈亏自负。</code></pre>]]></content>
+    <content type="html"><![CDATA[<pre><code>此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，探索阶段，努力试错。20180111，买入：002208合肥城建 成交价：10:30，20180112，卖出-----------------------：10.69. 盈利58520180115，买入：002131利欧股份 成交价：2.81，20180115，买入：300465高伟达   成交价：9.96，20180116，卖出：300465高伟达   成交价：10.27，盈利43720180122, 卖出：002131利欧股份 成交价：2.74，亏损52120180124，买入：600992贵绳股份 成交价：11.45，20180125，卖出：600992贵绳股份 成交价：11.55，盈利12020180131，买入：002109兴化股份 成交价：7.24，20180131，买入：002106莱宝高科 成交价：9.81，20180201，卖出：002109兴化股份 成交价：7.50。盈利493仅供参考，据此操作盈亏自负。</code></pre>]]></content>
     
     <summary type="html">
     
