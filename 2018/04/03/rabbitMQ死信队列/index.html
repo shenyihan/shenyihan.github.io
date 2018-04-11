@@ -27,18 +27,18 @@
     
     
     <meta name="keywords" content="软件">
-    <meta name="description" content="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：消息被拒绝（basic.reject/ basic.nack）并且requeue=false消息">
+    <meta name="description" content="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列 介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况： 消息被拒绝（basic.reject/ basic.nack）并且requeue=false">
 <meta name="keywords" content="软件">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rabbitMQ死信队列">
 <meta property="og:url" content="https://shenyihan.github.io/2018/04/03/rabbitMQ死信队列/index.html">
 <meta property="og:site_name" content="个人主页">
-<meta property="og:description" content="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：消息被拒绝（basic.reject/ basic.nack）并且requeue=false消息">
+<meta property="og:description" content="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列 介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况： 消息被拒绝（basic.reject/ basic.nack）并且requeue=false">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-04-03T06:16:25.907Z">
+<meta property="og:updated_time" content="2018-04-10T05:53:26.563Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="rabbitMQ死信队列">
-<meta name="twitter:description" content="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：消息被拒绝（basic.reject/ basic.nack）并且requeue=false消息">
+<meta name="twitter:description" content="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列 介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况： 消息被拒绝（basic.reject/ basic.nack）并且requeue=false">
     
         <link rel="alternate" type="application/atom+xml" title="个人主页" href="/atom.xml">
     
@@ -204,7 +204,7 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列"><span class="post-toc-number">1.</span> <span class="post-toc-text">应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#介绍：DLX-Dead-Letter-Exchange。利用DLX-当消息在一个队列中变成死信（dead-message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况："><span class="post-toc-number">2.</span> <span class="post-toc-text">介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用说明："><span class="post-toc-number">3.</span> <span class="post-toc-text">使用说明：</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#应用场景："><span class="post-toc-number">1.</span> <span class="post-toc-text">应用场景：</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#介绍："><span class="post-toc-number">2.</span> <span class="post-toc-text">介绍：</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用说明："><span class="post-toc-number">3.</span> <span class="post-toc-text">使用说明：</span></a></li></ol>
         </nav>
     </aside>
     
@@ -229,8 +229,12 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列"><a href="#应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列" class="headerlink" title="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列"></a>应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列</h1><h1 id="介绍：DLX-Dead-Letter-Exchange。利用DLX-当消息在一个队列中变成死信（dead-message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况："><a href="#介绍：DLX-Dead-Letter-Exchange。利用DLX-当消息在一个队列中变成死信（dead-message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：" class="headerlink" title="介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况："></a>介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：</h1><p>消息被拒绝（basic.reject/ basic.nack）并且requeue=false<br>消息TTL过期（参考：RabbitMQ之TTL（Time-To-Live 过期时间））<br>队列达到最大长度<br>DLX也是一个正常的Exchange，和一般的Exchange没有区别，它能在任何的队列上被指定，实际上就是设置某个队列的属性，当这个队列中有死信时，RabbitMQ就会自动的将这个消息重新发布到设置的Exchange上去，进而被路由到另一个队列，可以监听这个队列中消息做相应的处理，这个特性可以弥补RabbitMQ 3.0以前支持的immediate参数（可以参考RabbitMQ之mandatory和immediate）的功能。</p>
-<h1 id="使用说明："><a href="#使用说明：" class="headerlink" title="使用说明："></a>使用说明：</h1><pre><code>@Bean
+            <h1 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h1><pre><code>MQ队列信息消费失败后进入死信队列，实现延迟队列
+</code></pre><h1 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h1><pre><code>DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：
+消息被拒绝（basic.reject/ basic.nack）并且requeue=false
+消息TTL过期（参考：RabbitMQ之TTL（Time-To-Live 过期时间））
+队列达到最大长度    DLX也是一个正常的Exchange，和一般的Exchange没有区别，它能在任何的队列上被指定，实际上就是设置某个队列的属性，当这个队列中有死信时，RabbitMQ就会自动的将这个消息重新发布到设置的Exchange上去，进而被路由到另一个队列，可以监听这个队列中消息做相应的处理，这个特性可以弥补RabbitMQ 3.0以前支持的immediate参数（可以参考RabbitMQ之mandatory和immediate）的功能。
+</code></pre><h1 id="使用说明："><a href="#使用说明：" class="headerlink" title="使用说明："></a>使用说明：</h1><pre><code>@Bean
 public Queue fundConfirmQueue() {
     Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
     //设置死信交换机
@@ -287,7 +291,7 @@ public Binding dlxBinding() {
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-04-03T06:16:25.907Z" itemprop="dateUpdated">2018-04-03 14:16:25</time>
+    最后更新时间：<time datetime="2018-04-10T05:53:26.563Z" itemprop="dateUpdated">2018-04-10 13:53:26</time>
 </span><br>
 
 
@@ -367,7 +371,14 @@ public Binding dlxBinding() {
     </div>
 
     
-<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2018/04/10/mybatis-plus应用/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">mybatis-plus应用</h4>
+      </a>
+    </div>
   
 
   

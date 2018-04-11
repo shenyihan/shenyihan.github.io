@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shenyihan.github.io/"/>
-  <updated>2018-04-03T06:16:25.907Z</updated>
+  <updated>2018-04-10T07:08:18.057Z</updated>
   <id>https://shenyihan.github.io/</id>
   
   <author>
@@ -17,19 +17,45 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>rabbitMQ死信队列</title>
-    <link href="https://shenyihan.github.io/2018/04/03/rabbitMQ%E6%AD%BB%E4%BF%A1%E9%98%9F%E5%88%97/"/>
-    <id>https://shenyihan.github.io/2018/04/03/rabbitMQ死信队列/</id>
-    <published>2018-04-03T06:10:19.000Z</published>
-    <updated>2018-04-03T06:16:25.907Z</updated>
+    <title>mybatis-plus应用</title>
+    <link href="https://shenyihan.github.io/2018/04/10/mybatis-plus%E5%BA%94%E7%94%A8/"/>
+    <id>https://shenyihan.github.io/2018/04/10/mybatis-plus应用/</id>
+    <published>2018-04-10T05:51:10.000Z</published>
+    <updated>2018-04-10T07:08:18.057Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列"><a href="#应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列" class="headerlink" title="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列"></a>应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列</h1><h1 id="介绍：DLX-Dead-Letter-Exchange。利用DLX-当消息在一个队列中变成死信（dead-message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况："><a href="#介绍：DLX-Dead-Letter-Exchange。利用DLX-当消息在一个队列中变成死信（dead-message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：" class="headerlink" title="介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况："></a>介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：</h1><p>消息被拒绝（basic.reject/ basic.nack）并且requeue=false<br>消息TTL过期（参考：RabbitMQ之TTL（Time-To-Live 过期时间））<br>队列达到最大长度<br>DLX也是一个正常的Exchange，和一般的Exchange没有区别，它能在任何的队列上被指定，实际上就是设置某个队列的属性，当这个队列中有死信时，RabbitMQ就会自动的将这个消息重新发布到设置的Exchange上去，进而被路由到另一个队列，可以监听这个队列中消息做相应的处理，这个特性可以弥补RabbitMQ 3.0以前支持的immediate参数（可以参考RabbitMQ之mandatory和immediate）的功能。</p><h1 id="使用说明："><a href="#使用说明：" class="headerlink" title="使用说明："></a>使用说明：</h1><pre><code>@Beanpublic Queue fundConfirmQueue() {    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();    //设置死信交换机    map.put(&quot;x-dead-letter-exchange&quot;, MessageQueueName.DLX_EXCHANGE);    //设置死信routingKey    map.put(&quot;x-dead-letter-routing-key&quot;, MessageQueueName.DLX_ROUTING_KEY);    //消息被确认前的最大等待时间，默认为无限大    //arguments.put(&quot;x-message-ttl&quot;, 60000);    //消息队列的最大大长度，默认永不过期    //arguments.put(&quot;x-max-length&quot;, 300);    Queue queue = new Queue(MessageQueueName.fundConfirmQueue,true, false, false, map);    return queue;}@Beanpublic Queue fundCancelQueue() {    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();    //设置死信交换机    map.put(&quot;x-dead-letter-exchange&quot;, MessageQueueName.DLX_EXCHANGE);    //设置死信routingKey    map.put(&quot;x-dead-letter-routing-key&quot;, MessageQueueName.DLX_ROUTING_KEY);    Queue queue = new Queue(MessageQueueName.fundCancelQueue,true, false, false, map);    return queue;}/** * 死信交换机 */@Beanpublic DirectExchange dlxExchange() {    return new DirectExchange(MessageQueueName.DLX_EXCHANGE);}/** * 死信队列 */@Beanpublic Queue dlxQueue() {    return new Queue(MessageQueueName.DLX_QUEUE,true,false,false);}/** * 通过死信路由key绑定死信交换机和死信队列 */@Beanpublic Binding dlxBinding() {    return BindingBuilder.bind(dlxQueue()).to(dlxExchange())            .with(MessageQueueName.DLX_ROUTING_KEY);}</code></pre>]]></content>
+    <content type="html"><![CDATA[<h1 id="官方学习文档："><a href="#官方学习文档：" class="headerlink" title="官方学习文档："></a>官方学习文档：</h1><pre><code>http://baomidou.oschina.io/mybatis-plus-doc/#/?id=%e7%ae%80%e4%bb%8b</code></pre><h1 id="配置："><a href="#配置：" class="headerlink" title="配置："></a>配置：</h1><pre><code>&lt;dependency&gt;    &lt;groupId&gt;com.baomidou&lt;/groupId&gt;    &lt;artifactId&gt;mybatis-plus&lt;/artifactId&gt;    &lt;version&gt;2.1.8&lt;/version&gt;&lt;/dependency&gt;&lt;!-- https://mvnrepository.com/artifact/com.baomidou/mybatisplus-spring-boot-starter --&gt;&lt;dependency&gt;    &lt;groupId&gt;com.baomidou&lt;/groupId&gt;    &lt;artifactId&gt;mybatisplus-spring-boot-starter&lt;/artifactId&gt;    &lt;version&gt;1.0.5&lt;/version&gt;&lt;/dependency&gt;</code></pre><h1 id="使用方式："><a href="#使用方式：" class="headerlink" title="使用方式："></a>使用方式：</h1><pre><code>1、通过实现baseMapper的**mapper调用数据操作方法，例如userMapper.insert(user);2、ActiveRecord 方式 实现model类，通过实例类来操作，例如user.insert();</code></pre><h1 id="实例："><a href="#实例：" class="headerlink" title="实例："></a>实例：</h1><pre><code>https://github.com/shenyihan/MyBatisPlusLearn</code></pre>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列&quot;&gt;&lt;a href=&quot;#应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列&quot; class=&quot;headerlink&quot; title=&quot;应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列&quot;&gt;&lt;/a
+        &lt;h1 id=&quot;官方学习文档：&quot;&gt;&lt;a href=&quot;#官方学习文档：&quot; class=&quot;headerlink&quot; title=&quot;官方学习文档：&quot;&gt;&lt;/a&gt;官方学习文档：&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;http://baomidou.oschina.io/mybatis-plus-do
+      
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="软件" scheme="https://shenyihan.github.io/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>rabbitMQ死信队列</title>
+    <link href="https://shenyihan.github.io/2018/04/03/rabbitMQ%E6%AD%BB%E4%BF%A1%E9%98%9F%E5%88%97/"/>
+    <id>https://shenyihan.github.io/2018/04/03/rabbitMQ死信队列/</id>
+    <published>2018-04-03T06:10:19.000Z</published>
+    <updated>2018-04-10T05:53:26.563Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h1><pre><code>MQ队列信息消费失败后进入死信队列，实现延迟队列</code></pre><h1 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h1><pre><code>DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：消息被拒绝（basic.reject/ basic.nack）并且requeue=false消息TTL过期（参考：RabbitMQ之TTL（Time-To-Live 过期时间））队列达到最大长度    DLX也是一个正常的Exchange，和一般的Exchange没有区别，它能在任何的队列上被指定，实际上就是设置某个队列的属性，当这个队列中有死信时，RabbitMQ就会自动的将这个消息重新发布到设置的Exchange上去，进而被路由到另一个队列，可以监听这个队列中消息做相应的处理，这个特性可以弥补RabbitMQ 3.0以前支持的immediate参数（可以参考RabbitMQ之mandatory和immediate）的功能。</code></pre><h1 id="使用说明："><a href="#使用说明：" class="headerlink" title="使用说明："></a>使用说明：</h1><pre><code>@Beanpublic Queue fundConfirmQueue() {    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();    //设置死信交换机    map.put(&quot;x-dead-letter-exchange&quot;, MessageQueueName.DLX_EXCHANGE);    //设置死信routingKey    map.put(&quot;x-dead-letter-routing-key&quot;, MessageQueueName.DLX_ROUTING_KEY);    //消息被确认前的最大等待时间，默认为无限大    //arguments.put(&quot;x-message-ttl&quot;, 60000);    //消息队列的最大大长度，默认永不过期    //arguments.put(&quot;x-max-length&quot;, 300);    Queue queue = new Queue(MessageQueueName.fundConfirmQueue,true, false, false, map);    return queue;}@Beanpublic Queue fundCancelQueue() {    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();    //设置死信交换机    map.put(&quot;x-dead-letter-exchange&quot;, MessageQueueName.DLX_EXCHANGE);    //设置死信routingKey    map.put(&quot;x-dead-letter-routing-key&quot;, MessageQueueName.DLX_ROUTING_KEY);    Queue queue = new Queue(MessageQueueName.fundCancelQueue,true, false, false, map);    return queue;}/** * 死信交换机 */@Beanpublic DirectExchange dlxExchange() {    return new DirectExchange(MessageQueueName.DLX_EXCHANGE);}/** * 死信队列 */@Beanpublic Queue dlxQueue() {    return new Queue(MessageQueueName.DLX_QUEUE,true,false,false);}/** * 通过死信路由key绑定死信交换机和死信队列 */@Beanpublic Binding dlxBinding() {    return BindingBuilder.bind(dlxQueue()).to(dlxExchange())            .with(MessageQueueName.DLX_ROUTING_KEY);}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;应用场景：&quot;&gt;&lt;a href=&quot;#应用场景：&quot; class=&quot;headerlink&quot; title=&quot;应用场景：&quot;&gt;&lt;/a&gt;应用场景：&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;MQ队列信息消费失败后进入死信队列，实现延迟队列
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;介绍：&quot;
       
     
     </summary>
@@ -168,6 +194,32 @@
   </entry>
   
   <entry>
+    <title>理论剖析</title>
+    <link href="https://shenyihan.github.io/2018/01/01/%E7%90%86%E8%AE%BA%E5%89%96%E6%9E%90/"/>
+    <id>https://shenyihan.github.io/2018/01/01/理论剖析/</id>
+    <published>2018-01-01T01:56:16.000Z</published>
+    <updated>2018-02-27T02:10:38.060Z</updated>
+    
+    <content type="html"><![CDATA[<p>总结一些著名理论的适用场景</p><h1 id="江恩理论"><a href="#江恩理论" class="headerlink" title="江恩理论"></a>江恩理论</h1><h2 id="关注两种时间周期：对等周期和对等循环周期"><a href="#关注两种时间周期：对等周期和对等循环周期" class="headerlink" title="关注两种时间周期：对等周期和对等循环周期"></a>关注两种时间周期：对等周期和对等循环周期</h2><pre><code>对等周期：下跌和上涨时间（所用交易日）相同对等循环周期：选定一组高低点，在这组高低点的区间内又有很多的高低点，区间内第一个高低点距离区间左临界位交易日个数为8T，则区间右临界位+8即为变盘点（顶或底）；</code></pre><h1 id="龙虎榜的重要性"><a href="#龙虎榜的重要性" class="headerlink" title="龙虎榜的重要性"></a>龙虎榜的重要性</h1><h2 id="例如说佛山普澜二路证券营业部"><a href="#例如说佛山普澜二路证券营业部" class="headerlink" title="例如说佛山普澜二路证券营业部"></a>例如说佛山普澜二路证券营业部</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;总结一些著名理论的适用场景&lt;/p&gt;
+&lt;h1 id=&quot;江恩理论&quot;&gt;&lt;a href=&quot;#江恩理论&quot; class=&quot;headerlink&quot; title=&quot;江恩理论&quot;&gt;&lt;/a&gt;江恩理论&lt;/h1&gt;&lt;h2 id=&quot;关注两种时间周期：对等周期和对等循环周期&quot;&gt;&lt;a href=&quot;#关注两种
+      
+    
+    </summary>
+    
+      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
+    
+    
+      <category term="股票操作" scheme="https://shenyihan.github.io/tags/%E8%82%A1%E7%A5%A8%E6%93%8D%E4%BD%9C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>短线操作</title>
     <link href="https://shenyihan.github.io/2018/01/01/%E7%9F%AD%E7%BA%BF%E6%93%8D%E4%BD%9C/"/>
     <id>https://shenyihan.github.io/2018/01/01/短线操作/</id>
@@ -183,32 +235,6 @@
         &lt;pre&gt;&lt;code&gt;此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。
 暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，探索阶段，努力试错。
 20180111，买入：002208合肥城建 成交价
-      
-    
-    </summary>
-    
-      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
-    
-    
-      <category term="股票操作" scheme="https://shenyihan.github.io/tags/%E8%82%A1%E7%A5%A8%E6%93%8D%E4%BD%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>理论剖析</title>
-    <link href="https://shenyihan.github.io/2018/01/01/%E7%90%86%E8%AE%BA%E5%89%96%E6%9E%90/"/>
-    <id>https://shenyihan.github.io/2018/01/01/理论剖析/</id>
-    <published>2018-01-01T01:56:16.000Z</published>
-    <updated>2018-02-27T02:10:38.060Z</updated>
-    
-    <content type="html"><![CDATA[<p>总结一些著名理论的适用场景</p><h1 id="江恩理论"><a href="#江恩理论" class="headerlink" title="江恩理论"></a>江恩理论</h1><h2 id="关注两种时间周期：对等周期和对等循环周期"><a href="#关注两种时间周期：对等周期和对等循环周期" class="headerlink" title="关注两种时间周期：对等周期和对等循环周期"></a>关注两种时间周期：对等周期和对等循环周期</h2><pre><code>对等周期：下跌和上涨时间（所用交易日）相同对等循环周期：选定一组高低点，在这组高低点的区间内又有很多的高低点，区间内第一个高低点距离区间左临界位交易日个数为8T，则区间右临界位+8即为变盘点（顶或底）；</code></pre><h1 id="龙虎榜的重要性"><a href="#龙虎榜的重要性" class="headerlink" title="龙虎榜的重要性"></a>龙虎榜的重要性</h1><h2 id="例如说佛山普澜二路证券营业部"><a href="#例如说佛山普澜二路证券营业部" class="headerlink" title="例如说佛山普澜二路证券营业部"></a>例如说佛山普澜二路证券营业部</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;总结一些著名理论的适用场景&lt;/p&gt;
-&lt;h1 id=&quot;江恩理论&quot;&gt;&lt;a href=&quot;#江恩理论&quot; class=&quot;headerlink&quot; title=&quot;江恩理论&quot;&gt;&lt;/a&gt;江恩理论&lt;/h1&gt;&lt;h2 id=&quot;关注两种时间周期：对等周期和对等循环周期&quot;&gt;&lt;a href=&quot;#关注两种
       
     
     </summary>
