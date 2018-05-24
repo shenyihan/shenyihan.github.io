@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shenyihan.github.io/"/>
-  <updated>2018-04-10T07:08:18.057Z</updated>
+  <updated>2018-04-11T04:44:33.213Z</updated>
   <id>https://shenyihan.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Spring-Boot自定义启动图案</title>
+    <link href="https://shenyihan.github.io/2018/04/11/Spring-Boot%E8%87%AA%E5%AE%9A%E4%B9%89%E5%90%AF%E5%8A%A8%E5%9B%BE%E6%A1%88/"/>
+    <id>https://shenyihan.github.io/2018/04/11/Spring-Boot自定义启动图案/</id>
+    <published>2018-04-11T04:41:18.000Z</published>
+    <updated>2018-04-11T04:44:33.213Z</updated>
+    
+    <content type="html"><![CDATA[<p>Spring-Boot启动的时候会打印出spring官方的图案:</p><h1 id="自定义这个图案方法如下"><a href="#自定义这个图案方法如下" class="headerlink" title="自定义这个图案方法如下:"></a>自定义这个图案方法如下:</h1><pre><code>在/src/main/resources/新建一个banner.txt文件登陆:http://patorjk.com/software/taag将框中Type Something 替换成自己的单词字母,再将下面生成的图案复制到刚刚创建的那个txt中,再次启动项目,发现图案改变了</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;Spring-Boot启动的时候会打印出spring官方的图案:&lt;/p&gt;
+&lt;h1 id=&quot;自定义这个图案方法如下&quot;&gt;&lt;a href=&quot;#自定义这个图案方法如下&quot; class=&quot;headerlink&quot; title=&quot;自定义这个图案方法如下:&quot;&gt;&lt;/a&gt;自定义这个图案方法如下:
+      
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="软件" scheme="https://shenyihan.github.io/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>mybatis-plus应用</title>
