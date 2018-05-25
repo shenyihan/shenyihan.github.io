@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shenyihan.github.io/"/>
-  <updated>2018-05-25T09:22:39.934Z</updated>
+  <updated>2018-05-25T09:38:58.007Z</updated>
   <id>https://shenyihan.github.io/</id>
   
   <author>
@@ -17,20 +17,46 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Docker 的常用操作命令和 Tomcat 的安装</title>
-    <link href="https://shenyihan.github.io/2018/05/25/Docker-%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%92%8C-Tomcat-%E7%9A%84%E5%AE%89%E8%A3%85/"/>
-    <id>https://shenyihan.github.io/2018/05/25/Docker-的常用操作命令和-Tomcat-的安装/</id>
-    <published>2018-05-25T09:21:53.000Z</published>
-    <updated>2018-05-25T09:22:39.934Z</updated>
+    <title>Spring-Boot自定义启动图案</title>
+    <link href="https://shenyihan.github.io/2018/05/11/Spring-Boot%E8%87%AA%E5%AE%9A%E4%B9%89%E5%90%AF%E5%8A%A8%E5%9B%BE%E6%A1%88/"/>
+    <id>https://shenyihan.github.io/2018/05/11/Spring-Boot自定义启动图案/</id>
+    <published>2018-05-11T04:41:18.000Z</published>
+    <updated>2018-05-25T09:38:58.007Z</updated>
     
-    <content type="html"><![CDATA[<p>[TOC]</p><h1 id="Docker-的常用操作命令和-Tomcat-的安装"><a href="#Docker-的常用操作命令和-Tomcat-的安装" class="headerlink" title="Docker 的常用操作命令和 Tomcat 的安装"></a>Docker 的常用操作命令和 Tomcat 的安装</h1><p>我们在安装完 Docker 后，肯定想第一时间安装对应的应用。那么该如何在 Docker 容器中安装应用呢？如何启动和访问 </p><p>Docker 的所有命令，都可以在 Docker-hub 上找到对应资料，<a href="https://hub.docker.com/。" target="_blank" rel="noopener">https://hub.docker.com/。</a></p><h2 id="Docker-的-4-个主要的镜像操作命令。"><a href="#Docker-的-4-个主要的镜像操作命令。" class="headerlink" title="Docker 的 4 个主要的镜像操作命令。"></a>Docker 的 4 个主要的镜像操作命令。</h2><p>操作    命令    说明<br>检索    docker search 关键字 eg：docker search redis    我们经常去docker hub上检索镜像的详细信息，如镜像的TAG。<br>拉取    docker pull 镜像名:tag    :tag是可选的，tag表示标签，多为软件的版本，默认是latest<br>列表    docker images    查看所有本地镜像<br>删除    docker rmi image-id    删除指定的本地镜像<br>靠上面 4 个主要的命令，我们基本上就可以做到得心应手。下面我以操作 Tomcat 为例，在详细的介绍一下 Docker 对应用的安装，启动，卸载，端口映射等教程。</p><h2 id="Docker-的容器操作"><a href="#Docker-的容器操作" class="headerlink" title="Docker 的容器操作"></a>Docker 的容器操作</h2><p>Docker 的软件镜像（就像QQ安装程序一样）需要通过运行镜像，然后产生一个容器（正在运行的软件，运行的QQ）；最后我们就可以使用这个容器了（使用QQ）。下面我们以 Tomcat 为例说说 Docker 的容器操作相关的命令。</p><p>在运行软件镜像之前，我们先需要搜索一下，这个镜像的版本等信息。相关搜索镜像命令如下：</p><p>[root@localhost ~]# docker search tomcat<br>搜索到对应的镜像后，我们就可以拉取镜像了。</p><p>[root@localhost ~]# docker pull tomcat<br>拉去到镜像后，就可以根据镜像启动容器了。</p><p>docker run –name mytomcat -d tomcat:latest<br>再接下来，我们就可以使用 docker ps  命令查看运行中的容器。</p><p>[root@localhost ~]# docker ps<br>docker ps -a 命令是查看所有的容器，包括运行的和非运行的。</p><p>停止运行中的容器，可以使用 docker stop 命令。</p><p>docker stop  容器的id<br>查看所有的容器</p><p>docker ps -a<br>启动容器</p><p>docker start 容器id<br>删除一个容器</p><p>docker rm 容器id<br>启动一个做了端口映射的tomcat</p><p>[root@localhost ~]# docker run -d -p 8888:8080 tomcat<br>参数说明：<br>-d：后台运行<br>-p: 将主机的端口映射到容器的一个端口    主机端口:容器内部的端口</p><p>关闭 linux 防火墙命令：</p><p>service firewalld status #查看防火墙状态<br>service firewalld stop #关闭防火墙<br>查看容器的日志</p><p>docker logs container-name/container-id</p>]]></content>
+    <content type="html"><![CDATA[<p>Spring-Boot启动的时候会打印出spring官方的图案:</p><h1 id="自定义这个图案方法如下"><a href="#自定义这个图案方法如下" class="headerlink" title="自定义这个图案方法如下:"></a>自定义这个图案方法如下:</h1><pre><code>在/src/main/resources/新建一个banner.txt文件登陆:http://patorjk.com/software/taag将框中Type Something 替换成自己的单词字母,再将下面生成的图案复制到刚刚创建的那个txt中,再次启动项目,发现图案改变了</code></pre>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;p&gt;[TOC]&lt;/p&gt;
-&lt;h1 id=&quot;Docker-的常用操作命令和-Tomcat-的安装&quot;&gt;&lt;a href=&quot;#Docker-的常用操作命令和-Tomcat-的安装&quot; class=&quot;headerlink&quot; title=&quot;Docker 的常用操作命令和 Tomcat 的安装&quot;
+        &lt;p&gt;Spring-Boot启动的时候会打印出spring官方的图案:&lt;/p&gt;
+&lt;h1 id=&quot;自定义这个图案方法如下&quot;&gt;&lt;a href=&quot;#自定义这个图案方法如下&quot; class=&quot;headerlink&quot; title=&quot;自定义这个图案方法如下:&quot;&gt;&lt;/a&gt;自定义这个图案方法如下:
+      
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="软件" scheme="https://shenyihan.github.io/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>rabbitMQ死信队列</title>
+    <link href="https://shenyihan.github.io/2018/05/03/rabbitMQ%E6%AD%BB%E4%BF%A1%E9%98%9F%E5%88%97/"/>
+    <id>https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/</id>
+    <published>2018-05-03T06:10:19.000Z</published>
+    <updated>2018-05-25T09:38:50.240Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h1><pre><code>MQ队列信息消费失败后进入死信队列，实现延迟队列</code></pre><h1 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h1><pre><code>DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：消息被拒绝（basic.reject/ basic.nack）并且requeue=false消息TTL过期（参考：RabbitMQ之TTL（Time-To-Live 过期时间））队列达到最大长度    DLX也是一个正常的Exchange，和一般的Exchange没有区别，它能在任何的队列上被指定，实际上就是设置某个队列的属性，当这个队列中有死信时，RabbitMQ就会自动的将这个消息重新发布到设置的Exchange上去，进而被路由到另一个队列，可以监听这个队列中消息做相应的处理，这个特性可以弥补RabbitMQ 3.0以前支持的immediate参数（可以参考RabbitMQ之mandatory和immediate）的功能。</code></pre><h1 id="使用说明："><a href="#使用说明：" class="headerlink" title="使用说明："></a>使用说明：</h1><pre><code>@Beanpublic Queue fundConfirmQueue() {    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();    //设置死信交换机    map.put(&quot;x-dead-letter-exchange&quot;, MessageQueueName.DLX_EXCHANGE);    //设置死信routingKey    map.put(&quot;x-dead-letter-routing-key&quot;, MessageQueueName.DLX_ROUTING_KEY);    //消息被确认前的最大等待时间，默认为无限大    //arguments.put(&quot;x-message-ttl&quot;, 60000);    //消息队列的最大大长度，默认永不过期    //arguments.put(&quot;x-max-length&quot;, 300);    Queue queue = new Queue(MessageQueueName.fundConfirmQueue,true, false, false, map);    return queue;}@Beanpublic Queue fundCancelQueue() {    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();    //设置死信交换机    map.put(&quot;x-dead-letter-exchange&quot;, MessageQueueName.DLX_EXCHANGE);    //设置死信routingKey    map.put(&quot;x-dead-letter-routing-key&quot;, MessageQueueName.DLX_ROUTING_KEY);    Queue queue = new Queue(MessageQueueName.fundCancelQueue,true, false, false, map);    return queue;}/** * 死信交换机 */@Beanpublic DirectExchange dlxExchange() {    return new DirectExchange(MessageQueueName.DLX_EXCHANGE);}/** * 死信队列 */@Beanpublic Queue dlxQueue() {    return new Queue(MessageQueueName.DLX_QUEUE,true,false,false);}/** * 通过死信路由key绑定死信交换机和死信队列 */@Beanpublic Binding dlxBinding() {    return BindingBuilder.bind(dlxQueue()).to(dlxExchange())            .with(MessageQueueName.DLX_ROUTING_KEY);}</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;应用场景：&quot;&gt;&lt;a href=&quot;#应用场景：&quot; class=&quot;headerlink&quot; title=&quot;应用场景：&quot;&gt;&lt;/a&gt;应用场景：&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;MQ队列信息消费失败后进入死信队列，实现延迟队列
+&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;介绍：&quot;
       
     
     </summary>
@@ -69,11 +95,11 @@
   </entry>
   
   <entry>
-    <title>关于wluck开源说明；</title>
+    <title>关于wluck开源说明</title>
     <link href="https://shenyihan.github.io/2018/04/24/%E5%85%B3%E4%BA%8Ewluck%E5%BC%80%E6%BA%90%E8%AF%B4%E6%98%8E/"/>
     <id>https://shenyihan.github.io/2018/04/24/关于wluck开源说明/</id>
     <published>2018-04-24T05:43:24.000Z</published>
-    <updated>2018-05-24T05:45:43.666Z</updated>
+    <updated>2018-05-25T09:39:08.838Z</updated>
     
     <content type="html"><![CDATA[<h1 id="wluck介绍"><a href="#wluck介绍" class="headerlink" title="wluck介绍"></a>wluck介绍</h1><p>wluck寓意为we luck，希望带给每一位使用者好运，当然还有框架的提供者们以及开源社区的朋友们。<br>wluck是使用springboot开发的一款后台管理基础系统，拿来即用。</p><h1 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h1><p>管理后台功能包含：用户管理、角色管理、权限管理、部门管理、菜单管理、字典管理、登录日志、操作日志、durid监控、通知管理等基础模块</p><h1 id="技术架构"><a href="#技术架构" class="headerlink" title="技术架构"></a>技术架构</h1><p>采用springboot模块化开发、maven项目管理。<br>整合架构：springboot+shiro+beetl+MyBatisplus+durid。</p><h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a>项目地址</h1><p><a href="https://github.com/shenyihan/wluck" target="_blank" rel="noopener">https://github.com/shenyihan/wluck</a></p><h1 id="部署步骤"><a href="#部署步骤" class="headerlink" title="部署步骤"></a>部署步骤</h1><p>1、下载源码至idea。<br><br>2、使用项目中sql文件新建数据库并增加基础数据，修改Application.properties配置文件中数据库用户和密码。<br><br>3、直接运行WLuckMgrApplication.main()方法即可。<br><br>4、输入<a href="http://localhost:8090/" target="_blank" rel="noopener">http://localhost:8090/</a> 用户名密码admin/111111。<br></p><h1 id="讨论"><a href="#讨论" class="headerlink" title="讨论"></a>讨论</h1><p>欢迎各位将使用中的问题反馈至yuren_88@126.com。</p><h1 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h1><p>此项目借鉴开源项目及架构开发，作为本人学习与使用。</p>]]></content>
     
@@ -108,32 +134,6 @@
   </entry>
   
   <entry>
-    <title>Spring-Boot自定义启动图案</title>
-    <link href="https://shenyihan.github.io/2018/04/11/Spring-Boot%E8%87%AA%E5%AE%9A%E4%B9%89%E5%90%AF%E5%8A%A8%E5%9B%BE%E6%A1%88/"/>
-    <id>https://shenyihan.github.io/2018/04/11/Spring-Boot自定义启动图案/</id>
-    <published>2018-04-11T04:41:18.000Z</published>
-    <updated>2018-04-11T04:44:33.213Z</updated>
-    
-    <content type="html"><![CDATA[<p>Spring-Boot启动的时候会打印出spring官方的图案:</p><h1 id="自定义这个图案方法如下"><a href="#自定义这个图案方法如下" class="headerlink" title="自定义这个图案方法如下:"></a>自定义这个图案方法如下:</h1><pre><code>在/src/main/resources/新建一个banner.txt文件登陆:http://patorjk.com/software/taag将框中Type Something 替换成自己的单词字母,再将下面生成的图案复制到刚刚创建的那个txt中,再次启动项目,发现图案改变了</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;Spring-Boot启动的时候会打印出spring官方的图案:&lt;/p&gt;
-&lt;h1 id=&quot;自定义这个图案方法如下&quot;&gt;&lt;a href=&quot;#自定义这个图案方法如下&quot; class=&quot;headerlink&quot; title=&quot;自定义这个图案方法如下:&quot;&gt;&lt;/a&gt;自定义这个图案方法如下:
-      
-    
-    </summary>
-    
-      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
-    
-    
-      <category term="软件" scheme="https://shenyihan.github.io/tags/%E8%BD%AF%E4%BB%B6/"/>
-    
-  </entry>
-  
-  <entry>
     <title>mybatis-plus应用</title>
     <link href="https://shenyihan.github.io/2018/04/10/mybatis-plus%E5%BA%94%E7%94%A8/"/>
     <id>https://shenyihan.github.io/2018/04/10/mybatis-plus应用/</id>
@@ -159,20 +159,47 @@
   </entry>
   
   <entry>
-    <title>rabbitMQ死信队列</title>
-    <link href="https://shenyihan.github.io/2018/04/03/rabbitMQ%E6%AD%BB%E4%BF%A1%E9%98%9F%E5%88%97/"/>
-    <id>https://shenyihan.github.io/2018/04/03/rabbitMQ死信队列/</id>
-    <published>2018-04-03T06:10:19.000Z</published>
-    <updated>2018-04-10T05:53:26.563Z</updated>
+    <title>自律</title>
+    <link href="https://shenyihan.github.io/2018/04/06/%E8%87%AA%E5%BE%8B/"/>
+    <id>https://shenyihan.github.io/2018/04/06/自律/</id>
+    <published>2018-04-06T09:07:41.000Z</published>
+    <updated>2018-05-25T09:39:28.631Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h1><pre><code>MQ队列信息消费失败后进入死信队列，实现延迟队列</code></pre><h1 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h1><pre><code>DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：消息被拒绝（basic.reject/ basic.nack）并且requeue=false消息TTL过期（参考：RabbitMQ之TTL（Time-To-Live 过期时间））队列达到最大长度    DLX也是一个正常的Exchange，和一般的Exchange没有区别，它能在任何的队列上被指定，实际上就是设置某个队列的属性，当这个队列中有死信时，RabbitMQ就会自动的将这个消息重新发布到设置的Exchange上去，进而被路由到另一个队列，可以监听这个队列中消息做相应的处理，这个特性可以弥补RabbitMQ 3.0以前支持的immediate参数（可以参考RabbitMQ之mandatory和immediate）的功能。</code></pre><h1 id="使用说明："><a href="#使用说明：" class="headerlink" title="使用说明："></a>使用说明：</h1><pre><code>@Beanpublic Queue fundConfirmQueue() {    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();    //设置死信交换机    map.put(&quot;x-dead-letter-exchange&quot;, MessageQueueName.DLX_EXCHANGE);    //设置死信routingKey    map.put(&quot;x-dead-letter-routing-key&quot;, MessageQueueName.DLX_ROUTING_KEY);    //消息被确认前的最大等待时间，默认为无限大    //arguments.put(&quot;x-message-ttl&quot;, 60000);    //消息队列的最大大长度，默认永不过期    //arguments.put(&quot;x-max-length&quot;, 300);    Queue queue = new Queue(MessageQueueName.fundConfirmQueue,true, false, false, map);    return queue;}@Beanpublic Queue fundCancelQueue() {    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();    //设置死信交换机    map.put(&quot;x-dead-letter-exchange&quot;, MessageQueueName.DLX_EXCHANGE);    //设置死信routingKey    map.put(&quot;x-dead-letter-routing-key&quot;, MessageQueueName.DLX_ROUTING_KEY);    Queue queue = new Queue(MessageQueueName.fundCancelQueue,true, false, false, map);    return queue;}/** * 死信交换机 */@Beanpublic DirectExchange dlxExchange() {    return new DirectExchange(MessageQueueName.DLX_EXCHANGE);}/** * 死信队列 */@Beanpublic Queue dlxQueue() {    return new Queue(MessageQueueName.DLX_QUEUE,true,false,false);}/** * 通过死信路由key绑定死信交换机和死信队列 */@Beanpublic Binding dlxBinding() {    return BindingBuilder.bind(dlxQueue()).to(dlxExchange())            .with(MessageQueueName.DLX_ROUTING_KEY);}</code></pre>]]></content>
+    <content type="html"><![CDATA[<p>首先转下在网上看到的关于自律的两句话。</p><p>王小波说，人一切的痛苦，本质上是对自己无能的愤怒。而自律，恰恰是解决人生痛苦的根本途径。比如拿运动来说，坚持运动的理由可能只有一个，但是放弃运动借口却有千千万。而对于高度自律的人，从来都不会给自己找任何借口。</p><p>只有自律的人，才能够真正掌控自己的人生，要知道一个人要管理好自己的行为和时间，往往并不需要很大外在的依赖和干预，更多的是克服自我的惰性并长期坚持养成各种好习惯。人往往都不能随心所欲，更多的是要做到严格约束自我行为，并逐渐变成有规律的好习惯，只有这样你才能获得更大的自由。</p><p>自律的第一点要慎独，一个人的自律不是给外面的人看的，更加不是为了晒朋友圈用的，而是自己对自己的严格要求，包括自我品格和道德意识的体现。正因为如此，我们更加应该关注在没人的时候，在别人看不见的时候做到严格要求和自我约束。一个高度自律的人往往有时候是孤独的，不需要太多的掌声，只需要听从你自己内心的声音，学会独处并孤芳自赏。</p><p>自律的第二点是接纳自己，不要去抱怨，不要去羡慕他人，不要去愤世嫉俗，更加不要怨天尤人，要勇于接纳现在的自己，包括自己所有的不完美。接纳自己本身也是个人成熟的表现，只有认识到自己的不足，从空虚和麻木中走出来，去努力寻求改变并付诸于自我实际行动。</p><p>自律的第三点是计划和目标，首先你要有目标，有了目标后制定详细的行动计划，然后就是严格的坚持和自律，并按照行动计划执行，在这个过程中不要给自己找任何借口，不要懈怠和放弃，坚持下来逐步形成自我的习惯和潜意识的行为和约束机制，那么你就是一个高度自律的人。</p>]]></content>
     
     <summary type="html">
     
       
       
-        &lt;h1 id=&quot;应用场景：&quot;&gt;&lt;a href=&quot;#应用场景：&quot; class=&quot;headerlink&quot; title=&quot;应用场景：&quot;&gt;&lt;/a&gt;应用场景：&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;MQ队列信息消费失败后进入死信队列，实现延迟队列
-&lt;/code&gt;&lt;/pre&gt;&lt;h1 id=&quot;介绍：&quot;
+        &lt;p&gt;首先转下在网上看到的关于自律的两句话。&lt;/p&gt;
+&lt;p&gt;王小波说，人一切的痛苦，本质上是对自己无能的愤怒。而自律，恰恰是解决人生痛苦的根本途径。比如拿运动来说，坚持运动的理由可能只有一个，但是放弃运动借口却有千千万。而对于高度自律的人，从来都不会给自己找任何借口。&lt;/p&gt;
+&lt;
+      
+    
+    </summary>
+    
+      <category term="生活" scheme="https://shenyihan.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
+    
+    
+      <category term="感悟" scheme="https://shenyihan.github.io/tags/%E6%84%9F%E6%82%9F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Docker 的常用操作命令和 Tomcat 的安装</title>
+    <link href="https://shenyihan.github.io/2018/03/26/Docker-%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%92%8C-Tomcat-%E7%9A%84%E5%AE%89%E8%A3%85/"/>
+    <id>https://shenyihan.github.io/2018/03/26/Docker-的常用操作命令和-Tomcat-的安装/</id>
+    <published>2018-03-26T09:21:53.000Z</published>
+    <updated>2018-05-25T09:38:29.463Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h1 id="Docker-的常用操作命令和-Tomcat-的安装"><a href="#Docker-的常用操作命令和-Tomcat-的安装" class="headerlink" title="Docker 的常用操作命令和 Tomcat 的安装"></a>Docker 的常用操作命令和 Tomcat 的安装</h1><p>我们在安装完 Docker 后，肯定想第一时间安装对应的应用。那么该如何在 Docker 容器中安装应用呢？如何启动和访问 </p><p>Docker 的所有命令，都可以在 Docker-hub 上找到对应资料，<a href="https://hub.docker.com/。" target="_blank" rel="noopener">https://hub.docker.com/。</a></p><h2 id="Docker-的-4-个主要的镜像操作命令。"><a href="#Docker-的-4-个主要的镜像操作命令。" class="headerlink" title="Docker 的 4 个主要的镜像操作命令。"></a>Docker 的 4 个主要的镜像操作命令。</h2><p>操作    命令    说明<br>检索    docker search 关键字 eg：docker search redis    我们经常去docker hub上检索镜像的详细信息，如镜像的TAG。<br>拉取    docker pull 镜像名:tag    :tag是可选的，tag表示标签，多为软件的版本，默认是latest<br>列表    docker images    查看所有本地镜像<br>删除    docker rmi image-id    删除指定的本地镜像<br>靠上面 4 个主要的命令，我们基本上就可以做到得心应手。下面我以操作 Tomcat 为例，在详细的介绍一下 Docker 对应用的安装，启动，卸载，端口映射等教程。</p><h2 id="Docker-的容器操作"><a href="#Docker-的容器操作" class="headerlink" title="Docker 的容器操作"></a>Docker 的容器操作</h2><p>Docker 的软件镜像（就像QQ安装程序一样）需要通过运行镜像，然后产生一个容器（正在运行的软件，运行的QQ）；最后我们就可以使用这个容器了（使用QQ）。下面我们以 Tomcat 为例说说 Docker 的容器操作相关的命令。</p><p>在运行软件镜像之前，我们先需要搜索一下，这个镜像的版本等信息。相关搜索镜像命令如下：</p><p>[root@localhost ~]# docker search tomcat<br>搜索到对应的镜像后，我们就可以拉取镜像了。</p><p>[root@localhost ~]# docker pull tomcat<br>拉去到镜像后，就可以根据镜像启动容器了。</p><p>docker run –name mytomcat -d tomcat:latest<br>再接下来，我们就可以使用 docker ps  命令查看运行中的容器。</p><p>[root@localhost ~]# docker ps<br>docker ps -a 命令是查看所有的容器，包括运行的和非运行的。</p><p>停止运行中的容器，可以使用 docker stop 命令。</p><p>docker stop  容器的id<br>查看所有的容器</p><p>docker ps -a<br>启动容器</p><p>docker start 容器id<br>删除一个容器</p><p>docker rm 容器id<br>启动一个做了端口映射的tomcat</p><p>[root@localhost ~]# docker run -d -p 8888:8080 tomcat<br>参数说明：<br>-d：后台运行<br>-p: 将主机的端口映射到容器的一个端口    主机端口:容器内部的端口</p><p>关闭 linux 防火墙命令：</p><p>service firewalld status #查看防火墙状态<br>service firewalld stop #关闭防火墙<br>查看容器的日志</p><p>docker logs container-name/container-id</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1 id=&quot;Docker-的常用操作命令和-Tomcat-的安装&quot;&gt;&lt;a href=&quot;#Docker-的常用操作命令和-Tomcat-的安装&quot; class=&quot;headerlink&quot; title=&quot;Docker 的常用操作命令和 Tomcat 的安装&quot;
       
     
     </summary>
@@ -288,33 +315,6 @@
   </entry>
   
   <entry>
-    <title>自律</title>
-    <link href="https://shenyihan.github.io/2018/01/11/%E8%87%AA%E5%BE%8B/"/>
-    <id>https://shenyihan.github.io/2018/01/11/自律/</id>
-    <published>2018-01-11T09:07:41.000Z</published>
-    <updated>2018-01-11T09:10:57.717Z</updated>
-    
-    <content type="html"><![CDATA[<p>首先转下在网上看到的关于自律的两句话。</p><p>王小波说，人一切的痛苦，本质上是对自己无能的愤怒。而自律，恰恰是解决人生痛苦的根本途径。比如拿运动来说，坚持运动的理由可能只有一个，但是放弃运动借口却有千千万。而对于高度自律的人，从来都不会给自己找任何借口。</p><p>只有自律的人，才能够真正掌控自己的人生，要知道一个人要管理好自己的行为和时间，往往并不需要很大外在的依赖和干预，更多的是克服自我的惰性并长期坚持养成各种好习惯。人往往都不能随心所欲，更多的是要做到严格约束自我行为，并逐渐变成有规律的好习惯，只有这样你才能获得更大的自由。</p><p>自律的第一点要慎独，一个人的自律不是给外面的人看的，更加不是为了晒朋友圈用的，而是自己对自己的严格要求，包括自我品格和道德意识的体现。正因为如此，我们更加应该关注在没人的时候，在别人看不见的时候做到严格要求和自我约束。一个高度自律的人往往有时候是孤独的，不需要太多的掌声，只需要听从你自己内心的声音，学会独处并孤芳自赏。</p><p>自律的第二点是接纳自己，不要去抱怨，不要去羡慕他人，不要去愤世嫉俗，更加不要怨天尤人，要勇于接纳现在的自己，包括自己所有的不完美。接纳自己本身也是个人成熟的表现，只有认识到自己的不足，从空虚和麻木中走出来，去努力寻求改变并付诸于自我实际行动。</p><p>自律的第三点是计划和目标，首先你要有目标，有了目标后制定详细的行动计划，然后就是严格的坚持和自律，并按照行动计划执行，在这个过程中不要给自己找任何借口，不要懈怠和放弃，坚持下来逐步形成自我的习惯和潜意识的行为和约束机制，那么你就是一个高度自律的人。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;首先转下在网上看到的关于自律的两句话。&lt;/p&gt;
-&lt;p&gt;王小波说，人一切的痛苦，本质上是对自己无能的愤怒。而自律，恰恰是解决人生痛苦的根本途径。比如拿运动来说，坚持运动的理由可能只有一个，但是放弃运动借口却有千千万。而对于高度自律的人，从来都不会给自己找任何借口。&lt;/p&gt;
-&lt;
-      
-    
-    </summary>
-    
-      <category term="生活" scheme="https://shenyihan.github.io/categories/%E7%94%9F%E6%B4%BB/"/>
-    
-    
-      <category term="感悟" scheme="https://shenyihan.github.io/tags/%E6%84%9F%E6%82%9F/"/>
-    
-  </entry>
-  
-  <entry>
     <title>波浪理论</title>
     <link href="https://shenyihan.github.io/2018/01/10/%E6%B3%A2%E6%B5%AA%E7%90%86%E8%AE%BA/"/>
     <id>https://shenyihan.github.io/2018/01/10/波浪理论/</id>
@@ -337,32 +337,6 @@
   </entry>
   
   <entry>
-    <title>理论剖析</title>
-    <link href="https://shenyihan.github.io/2018/01/01/%E7%90%86%E8%AE%BA%E5%89%96%E6%9E%90/"/>
-    <id>https://shenyihan.github.io/2018/01/01/理论剖析/</id>
-    <published>2018-01-01T01:56:16.000Z</published>
-    <updated>2018-02-27T02:10:38.060Z</updated>
-    
-    <content type="html"><![CDATA[<p>总结一些著名理论的适用场景</p><h1 id="江恩理论"><a href="#江恩理论" class="headerlink" title="江恩理论"></a>江恩理论</h1><h2 id="关注两种时间周期：对等周期和对等循环周期"><a href="#关注两种时间周期：对等周期和对等循环周期" class="headerlink" title="关注两种时间周期：对等周期和对等循环周期"></a>关注两种时间周期：对等周期和对等循环周期</h2><pre><code>对等周期：下跌和上涨时间（所用交易日）相同对等循环周期：选定一组高低点，在这组高低点的区间内又有很多的高低点，区间内第一个高低点距离区间左临界位交易日个数为8T，则区间右临界位+8即为变盘点（顶或底）；</code></pre><h1 id="龙虎榜的重要性"><a href="#龙虎榜的重要性" class="headerlink" title="龙虎榜的重要性"></a>龙虎榜的重要性</h1><h2 id="例如说佛山普澜二路证券营业部"><a href="#例如说佛山普澜二路证券营业部" class="headerlink" title="例如说佛山普澜二路证券营业部"></a>例如说佛山普澜二路证券营业部</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;总结一些著名理论的适用场景&lt;/p&gt;
-&lt;h1 id=&quot;江恩理论&quot;&gt;&lt;a href=&quot;#江恩理论&quot; class=&quot;headerlink&quot; title=&quot;江恩理论&quot;&gt;&lt;/a&gt;江恩理论&lt;/h1&gt;&lt;h2 id=&quot;关注两种时间周期：对等周期和对等循环周期&quot;&gt;&lt;a href=&quot;#关注两种
-      
-    
-    </summary>
-    
-      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
-    
-    
-      <category term="股票操作" scheme="https://shenyihan.github.io/tags/%E8%82%A1%E7%A5%A8%E6%93%8D%E4%BD%9C/"/>
-    
-  </entry>
-  
-  <entry>
     <title>短线操作</title>
     <link href="https://shenyihan.github.io/2018/01/01/%E7%9F%AD%E7%BA%BF%E6%93%8D%E4%BD%9C/"/>
     <id>https://shenyihan.github.io/2018/01/01/短线操作/</id>
@@ -378,6 +352,32 @@
         &lt;pre&gt;&lt;code&gt;此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。
 暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，探索阶段，努力试错。
 20180111，买入：002208合肥城建 成交价
+      
+    
+    </summary>
+    
+      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
+    
+    
+      <category term="股票操作" scheme="https://shenyihan.github.io/tags/%E8%82%A1%E7%A5%A8%E6%93%8D%E4%BD%9C/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>理论剖析</title>
+    <link href="https://shenyihan.github.io/2018/01/01/%E7%90%86%E8%AE%BA%E5%89%96%E6%9E%90/"/>
+    <id>https://shenyihan.github.io/2018/01/01/理论剖析/</id>
+    <published>2018-01-01T01:56:16.000Z</published>
+    <updated>2018-02-27T02:10:38.060Z</updated>
+    
+    <content type="html"><![CDATA[<p>总结一些著名理论的适用场景</p><h1 id="江恩理论"><a href="#江恩理论" class="headerlink" title="江恩理论"></a>江恩理论</h1><h2 id="关注两种时间周期：对等周期和对等循环周期"><a href="#关注两种时间周期：对等周期和对等循环周期" class="headerlink" title="关注两种时间周期：对等周期和对等循环周期"></a>关注两种时间周期：对等周期和对等循环周期</h2><pre><code>对等周期：下跌和上涨时间（所用交易日）相同对等循环周期：选定一组高低点，在这组高低点的区间内又有很多的高低点，区间内第一个高低点距离区间左临界位交易日个数为8T，则区间右临界位+8即为变盘点（顶或底）；</code></pre><h1 id="龙虎榜的重要性"><a href="#龙虎榜的重要性" class="headerlink" title="龙虎榜的重要性"></a>龙虎榜的重要性</h1><h2 id="例如说佛山普澜二路证券营业部"><a href="#例如说佛山普澜二路证券营业部" class="headerlink" title="例如说佛山普澜二路证券营业部"></a>例如说佛山普澜二路证券营业部</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;总结一些著名理论的适用场景&lt;/p&gt;
+&lt;h1 id=&quot;江恩理论&quot;&gt;&lt;a href=&quot;#江恩理论&quot; class=&quot;headerlink&quot; title=&quot;江恩理论&quot;&gt;&lt;/a&gt;江恩理论&lt;/h1&gt;&lt;h2 id=&quot;关注两种时间周期：对等周期和对等循环周期&quot;&gt;&lt;a href=&quot;#关注两种
       
     
     </summary>
