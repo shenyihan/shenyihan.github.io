@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shenyihan.github.io/"/>
-  <updated>2018-05-24T05:55:53.125Z</updated>
+  <updated>2018-05-25T09:22:39.934Z</updated>
   <id>https://shenyihan.github.io/</id>
   
   <author>
@@ -15,6 +15,32 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Docker 的常用操作命令和 Tomcat 的安装</title>
+    <link href="https://shenyihan.github.io/2018/05/25/Docker-%E7%9A%84%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4%E5%92%8C-Tomcat-%E7%9A%84%E5%AE%89%E8%A3%85/"/>
+    <id>https://shenyihan.github.io/2018/05/25/Docker-的常用操作命令和-Tomcat-的安装/</id>
+    <published>2018-05-25T09:21:53.000Z</published>
+    <updated>2018-05-25T09:22:39.934Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h1 id="Docker-的常用操作命令和-Tomcat-的安装"><a href="#Docker-的常用操作命令和-Tomcat-的安装" class="headerlink" title="Docker 的常用操作命令和 Tomcat 的安装"></a>Docker 的常用操作命令和 Tomcat 的安装</h1><p>我们在安装完 Docker 后，肯定想第一时间安装对应的应用。那么该如何在 Docker 容器中安装应用呢？如何启动和访问 </p><p>Docker 的所有命令，都可以在 Docker-hub 上找到对应资料，<a href="https://hub.docker.com/。" target="_blank" rel="noopener">https://hub.docker.com/。</a></p><h2 id="Docker-的-4-个主要的镜像操作命令。"><a href="#Docker-的-4-个主要的镜像操作命令。" class="headerlink" title="Docker 的 4 个主要的镜像操作命令。"></a>Docker 的 4 个主要的镜像操作命令。</h2><p>操作    命令    说明<br>检索    docker search 关键字 eg：docker search redis    我们经常去docker hub上检索镜像的详细信息，如镜像的TAG。<br>拉取    docker pull 镜像名:tag    :tag是可选的，tag表示标签，多为软件的版本，默认是latest<br>列表    docker images    查看所有本地镜像<br>删除    docker rmi image-id    删除指定的本地镜像<br>靠上面 4 个主要的命令，我们基本上就可以做到得心应手。下面我以操作 Tomcat 为例，在详细的介绍一下 Docker 对应用的安装，启动，卸载，端口映射等教程。</p><h2 id="Docker-的容器操作"><a href="#Docker-的容器操作" class="headerlink" title="Docker 的容器操作"></a>Docker 的容器操作</h2><p>Docker 的软件镜像（就像QQ安装程序一样）需要通过运行镜像，然后产生一个容器（正在运行的软件，运行的QQ）；最后我们就可以使用这个容器了（使用QQ）。下面我们以 Tomcat 为例说说 Docker 的容器操作相关的命令。</p><p>在运行软件镜像之前，我们先需要搜索一下，这个镜像的版本等信息。相关搜索镜像命令如下：</p><p>[root@localhost ~]# docker search tomcat<br>搜索到对应的镜像后，我们就可以拉取镜像了。</p><p>[root@localhost ~]# docker pull tomcat<br>拉去到镜像后，就可以根据镜像启动容器了。</p><p>docker run –name mytomcat -d tomcat:latest<br>再接下来，我们就可以使用 docker ps  命令查看运行中的容器。</p><p>[root@localhost ~]# docker ps<br>docker ps -a 命令是查看所有的容器，包括运行的和非运行的。</p><p>停止运行中的容器，可以使用 docker stop 命令。</p><p>docker stop  容器的id<br>查看所有的容器</p><p>docker ps -a<br>启动容器</p><p>docker start 容器id<br>删除一个容器</p><p>docker rm 容器id<br>启动一个做了端口映射的tomcat</p><p>[root@localhost ~]# docker run -d -p 8888:8080 tomcat<br>参数说明：<br>-d：后台运行<br>-p: 将主机的端口映射到容器的一个端口    主机端口:容器内部的端口</p><p>关闭 linux 防火墙命令：</p><p>service firewalld status #查看防火墙状态<br>service firewalld stop #关闭防火墙<br>查看容器的日志</p><p>docker logs container-name/container-id</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h1 id=&quot;Docker-的常用操作命令和-Tomcat-的安装&quot;&gt;&lt;a href=&quot;#Docker-的常用操作命令和-Tomcat-的安装&quot; class=&quot;headerlink&quot; title=&quot;Docker 的常用操作命令和 Tomcat 的安装&quot;
+      
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="软件" scheme="https://shenyihan.github.io/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
   
   <entry>
     <title>免费制作网站；</title>
@@ -159,6 +185,32 @@
   </entry>
   
   <entry>
+    <title>Docker安装</title>
+    <link href="https://shenyihan.github.io/2018/03/25/Docker%E5%AE%89%E8%A3%85/"/>
+    <id>https://shenyihan.github.io/2018/03/25/Docker安装/</id>
+    <published>2018-03-25T08:58:01.000Z</published>
+    <updated>2018-05-25T09:04:32.709Z</updated>
+    
+    <content type="html"><![CDATA[<p>[TOC]</p><h2 id="在-linux-虚拟机上安装-docker"><a href="#在-linux-虚拟机上安装-docker" class="headerlink" title="在 linux 虚拟机上安装 docker"></a>在 linux 虚拟机上安装 docker</h2><p>第一步，检查 Linux 系统的内核版本，Docker 需要的内核必须是 3.10 及以上。检查内核版本的命令如下：<br>uname -r</p><p>第二步，如果 Linux 版本是 3.10 以上，那么我们就可以进行安装 docker 了。安装 Docker 的命令如下：<br>yum install docker<br>安装过程中，提示输入 y/n 我们输入 y 进行确认安装。</p><p>第三步，在安装完成后，我们就可以正在的操作 Docker 了。下面是启动 docker 的命令：<br>[root@localhost ~]# systemctl start docker<br>[root@localhost ~]# docker -v<br>Docker version 1.12.6, build 3e8e77d/1.12.6<br>启动完成后，我们可以使用 docker -v 命令查看安装的 Docker 的版本信息。</p><p>第四步，设置 Docker 开机自启动。相关命令如下：<br>[root@localhost ~]# systemctl enable docker<br>Created symlink from /etc/systemd/system/multi-user.target.wants/docker.service to /usr/lib/systemd/system/docker.service.</p><p>最后，我们再说说如何停止 docker。只需使用 systemctl stop docker 即可停止 Docker。<br>systemctl stop docker</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;[TOC]&lt;/p&gt;
+&lt;h2 id=&quot;在-linux-虚拟机上安装-docker&quot;&gt;&lt;a href=&quot;#在-linux-虚拟机上安装-docker&quot; class=&quot;headerlink&quot; title=&quot;在 linux 虚拟机上安装 docker&quot;&gt;&lt;/a&gt;在 linux 虚拟
+      
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="软件" scheme="https://shenyihan.github.io/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
     <title>mycat学习使用</title>
     <link href="https://shenyihan.github.io/2018/03/02/mycat%E5%AD%A6%E4%B9%A0%E4%BD%BF%E7%94%A8/"/>
     <id>https://shenyihan.github.io/2018/03/02/mycat学习使用/</id>
@@ -285,6 +337,32 @@
   </entry>
   
   <entry>
+    <title>理论剖析</title>
+    <link href="https://shenyihan.github.io/2018/01/01/%E7%90%86%E8%AE%BA%E5%89%96%E6%9E%90/"/>
+    <id>https://shenyihan.github.io/2018/01/01/理论剖析/</id>
+    <published>2018-01-01T01:56:16.000Z</published>
+    <updated>2018-02-27T02:10:38.060Z</updated>
+    
+    <content type="html"><![CDATA[<p>总结一些著名理论的适用场景</p><h1 id="江恩理论"><a href="#江恩理论" class="headerlink" title="江恩理论"></a>江恩理论</h1><h2 id="关注两种时间周期：对等周期和对等循环周期"><a href="#关注两种时间周期：对等周期和对等循环周期" class="headerlink" title="关注两种时间周期：对等周期和对等循环周期"></a>关注两种时间周期：对等周期和对等循环周期</h2><pre><code>对等周期：下跌和上涨时间（所用交易日）相同对等循环周期：选定一组高低点，在这组高低点的区间内又有很多的高低点，区间内第一个高低点距离区间左临界位交易日个数为8T，则区间右临界位+8即为变盘点（顶或底）；</code></pre><h1 id="龙虎榜的重要性"><a href="#龙虎榜的重要性" class="headerlink" title="龙虎榜的重要性"></a>龙虎榜的重要性</h1><h2 id="例如说佛山普澜二路证券营业部"><a href="#例如说佛山普澜二路证券营业部" class="headerlink" title="例如说佛山普澜二路证券营业部"></a>例如说佛山普澜二路证券营业部</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;总结一些著名理论的适用场景&lt;/p&gt;
+&lt;h1 id=&quot;江恩理论&quot;&gt;&lt;a href=&quot;#江恩理论&quot; class=&quot;headerlink&quot; title=&quot;江恩理论&quot;&gt;&lt;/a&gt;江恩理论&lt;/h1&gt;&lt;h2 id=&quot;关注两种时间周期：对等周期和对等循环周期&quot;&gt;&lt;a href=&quot;#关注两种
+      
+    
+    </summary>
+    
+      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
+    
+    
+      <category term="股票操作" scheme="https://shenyihan.github.io/tags/%E8%82%A1%E7%A5%A8%E6%93%8D%E4%BD%9C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>短线操作</title>
     <link href="https://shenyihan.github.io/2018/01/01/%E7%9F%AD%E7%BA%BF%E6%93%8D%E4%BD%9C/"/>
     <id>https://shenyihan.github.io/2018/01/01/短线操作/</id>
@@ -300,32 +378,6 @@
         &lt;pre&gt;&lt;code&gt;此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。
 暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，探索阶段，努力试错。
 20180111，买入：002208合肥城建 成交价
-      
-    
-    </summary>
-    
-      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
-    
-    
-      <category term="股票操作" scheme="https://shenyihan.github.io/tags/%E8%82%A1%E7%A5%A8%E6%93%8D%E4%BD%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>理论剖析</title>
-    <link href="https://shenyihan.github.io/2018/01/01/%E7%90%86%E8%AE%BA%E5%89%96%E6%9E%90/"/>
-    <id>https://shenyihan.github.io/2018/01/01/理论剖析/</id>
-    <published>2018-01-01T01:56:16.000Z</published>
-    <updated>2018-02-27T02:10:38.060Z</updated>
-    
-    <content type="html"><![CDATA[<p>总结一些著名理论的适用场景</p><h1 id="江恩理论"><a href="#江恩理论" class="headerlink" title="江恩理论"></a>江恩理论</h1><h2 id="关注两种时间周期：对等周期和对等循环周期"><a href="#关注两种时间周期：对等周期和对等循环周期" class="headerlink" title="关注两种时间周期：对等周期和对等循环周期"></a>关注两种时间周期：对等周期和对等循环周期</h2><pre><code>对等周期：下跌和上涨时间（所用交易日）相同对等循环周期：选定一组高低点，在这组高低点的区间内又有很多的高低点，区间内第一个高低点距离区间左临界位交易日个数为8T，则区间右临界位+8即为变盘点（顶或底）；</code></pre><h1 id="龙虎榜的重要性"><a href="#龙虎榜的重要性" class="headerlink" title="龙虎榜的重要性"></a>龙虎榜的重要性</h1><h2 id="例如说佛山普澜二路证券营业部"><a href="#例如说佛山普澜二路证券营业部" class="headerlink" title="例如说佛山普澜二路证券营业部"></a>例如说佛山普澜二路证券营业部</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;总结一些著名理论的适用场景&lt;/p&gt;
-&lt;h1 id=&quot;江恩理论&quot;&gt;&lt;a href=&quot;#江恩理论&quot; class=&quot;headerlink&quot; title=&quot;江恩理论&quot;&gt;&lt;/a&gt;江恩理论&lt;/h1&gt;&lt;h2 id=&quot;关注两种时间周期：对等周期和对等循环周期&quot;&gt;&lt;a href=&quot;#关注两种
       
     
     </summary>
@@ -473,42 +525,6 @@
     
     
       <category term="博客搭建" scheme="https://shenyihan.github.io/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>about</title>
-    <link href="https://shenyihan.github.io/2017/12/20/about/"/>
-    <id>https://shenyihan.github.io/2017/12/20/about/</id>
-    <published>2017-12-20T07:37:01.000Z</published>
-    <updated>2018-01-16T08:08:31.264Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>全世界只有不到百万分之一的人访问我的博客，你真是个特别的人关于我： name：杨向成backgroud:攻城狮关于博客：扯淡、分享联系我：mail：yuren_88@126.com</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;pre&gt;&lt;code&gt;全世界只有不到百万分之一的人访问我的博客，你真是个特别的人
-
-关于我： 
-name：杨向成
-backgroud:攻城狮
-
-关于博客：
-扯淡、分享
-
-联系我：
-mail：yuren_88@126.com
-&lt;/code&gt;&lt;/pre&gt;
-      
-    
-    </summary>
-    
-      <category term="关于我" scheme="https://shenyihan.github.io/categories/%E5%85%B3%E4%BA%8E%E6%88%91/"/>
-    
-    
-      <category term="关于我" scheme="https://shenyihan.github.io/tags/%E5%85%B3%E4%BA%8E%E6%88%91/"/>
     
   </entry>
   
