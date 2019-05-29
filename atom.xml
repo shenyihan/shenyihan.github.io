@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shenyihan.github.io/"/>
-  <updated>2018-05-25T09:38:58.007Z</updated>
+  <updated>2019-05-29T02:17:16.042Z</updated>
   <id>https://shenyihan.github.io/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>实用工具</title>
+    <link href="https://shenyihan.github.io/2019/05/29/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/"/>
+    <id>https://shenyihan.github.io/2019/05/29/实用工具/</id>
+    <published>2019-05-29T01:11:38.000Z</published>
+    <updated>2019-05-29T02:17:16.042Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="接口管理平台"><a href="#接口管理平台" class="headerlink" title="接口管理平台"></a>接口管理平台</h1><h2 id="哆啦接口管理官网"><a href="#哆啦接口管理官网" class="headerlink" title="哆啦接口管理官网"></a>哆啦接口管理官网</h2><ul><li>官方地址：<a href="https://www.smaty.net/" target="_blank" rel="noopener">https://www.smaty.net/</a></li><li>项目部署及配置：<a href="https://shuka.smaty.net/t/xapimanager" target="_blank" rel="noopener">https://shuka.smaty.net/t/xapimanager</a>   (安装和升级请参考手册)</li></ul><h2 id="功能说明"><a href="#功能说明" class="headerlink" title="功能说明"></a>功能说明</h2><ul><li>支持多团队、多项目、多环境，带给你更多的方便</li><li>支持完整的权限管理，功能权限（菜单权限，节点权限）、数据权限（项目权限，分类权限）</li><li>优化Api管理、request、response数据多层级导入及展示</li><li>简化操作、增加易用性、让体验更优</li><li>线上版本，打开即用，无需部署及配置，为了保证您的数据安全，我们进行了多重保护</li><li>开源版本，简化安装，无需其他辅助软件，直接运行</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      Life doesn’t get easier，you just get stronger。
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="实用工具" scheme="https://shenyihan.github.io/tags/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/"/>
+    
+  </entry>
   
   <entry>
     <title>Spring-Boot自定义启动图案</title>
@@ -492,31 +514,6 @@
 一、目    的：对某一篇文章输入密码后才能观看。
 二、修改内容：1、增加js前端控制功能
               mythemes\l
-      
-    
-    </summary>
-    
-      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
-    
-    
-      <category term="博客搭建" scheme="https://shenyihan.github.io/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo从零开始到搭建完整</title>
-    <link href="https://shenyihan.github.io/2017/12/27/hello-world/"/>
-    <id>https://shenyihan.github.io/2017/12/27/hello-world/</id>
-    <published>2017-12-27T03:38:16.000Z</published>
-    <updated>2018-01-13T03:21:42.614Z</updated>
-    
-    <content type="html"><![CDATA[<p>安装Git Bash<br>安装NodeJs<br>安装hexo<br>生成SSH并添加到github<br>部署项目<br>上传到github<br>绑定个人域名<br>修改及配置主题<br>添加RSS<br>添加评论<br>增加\mythemes\layout_partial\plugins\laibili.ejs<br>    &lt;% if (theme.livere_uid){ %&gt;<br>    <section class="comments" id="comments"><br>        <!-- 来必力City版安装代码 --><br>        <div id="lv-container" data-id="city" data-uid="<%- theme.livere_uid %>"><br>        <script type="text/javascript"><br>       (function(d, s) {<br>           var j, e = d.getElementsByTagName(s)[0];</p><pre><code>       if (typeof LivereTower === &apos;function&apos;) { return; }       j = d.createElement(s);       j.src = &apos;https://cdn-city.livere.com/js/embed.dist.js&apos;;       j.async = true;       e.parentNode.insertBefore(j, e);   })(document, &apos;script&apos;);    &lt;/script&gt;&lt;noscript&gt; 为正常使用来必力评论功能请激活JavaScript&lt;/noscript&gt;&lt;/div&gt;&lt;!-- City版安装代码已完成 --&gt;&lt;/section&gt;&lt;% } %&gt;</code></pre><p>comment.ejs增加&lt;%- partial(‘../plugins/laibili’) %&gt;<br>_config.yml增加livere_uid:xxxx<br>写文章部分</p></script></div></section></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;安装Git Bash&lt;br&gt;安装NodeJs&lt;br&gt;安装hexo&lt;br&gt;生成SSH并添加到github&lt;br&gt;部署项目&lt;br&gt;上传到github&lt;br&gt;绑定个人域名&lt;br&gt;修改及配置主题&lt;br&gt;添加RSS&lt;br&gt;添加评论&lt;br&gt;增加\mythemes\layout_part
       
     
     </summary>
