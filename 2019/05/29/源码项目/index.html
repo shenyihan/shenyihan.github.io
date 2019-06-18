@@ -17,28 +17,28 @@
     <meta charset="utf-8">
     
     
-    <link rel="canonical" href="https://shenyihan.github.io//2018/05/03/rabbitMQ死信队列/">
+    <link rel="canonical" href="https://shenyihan.github.io//2019/05/29/源码项目/">
     
     
-    <title>rabbitMQ死信队列 | 个人主页 | Life doesn’t get easier，you just get stronger</title>
+    <title>源码项目 | 个人主页 | Life doesn’t get easier，you just get stronger</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
-    <meta name="keywords" content="软件">
-    <meta name="description" content="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列 介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况： 消息被拒绝（basic.reject/ basic.nack）并且requeue=false">
-<meta name="keywords" content="软件">
+    <meta name="keywords" content="源码">
+    <meta name="description" content="Life doesn’t get easier，you just get stronger。">
+<meta name="keywords" content="源码">
 <meta property="og:type" content="article">
-<meta property="og:title" content="rabbitMQ死信队列">
-<meta property="og:url" content="https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/index.html">
+<meta property="og:title" content="源码项目">
+<meta property="og:url" content="https://shenyihan.github.io/2019/05/29/源码项目/index.html">
 <meta property="og:site_name" content="个人主页">
-<meta property="og:description" content="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列 介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况： 消息被拒绝（basic.reject/ basic.nack）并且requeue=false">
+<meta property="og:description" content="Life doesn’t get easier，you just get stronger。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-05-25T09:38:50.240Z">
+<meta property="og:updated_time" content="2019-05-29T09:01:36.222Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="rabbitMQ死信队列">
-<meta name="twitter:description" content="应用场景：MQ队列信息消费失败后进入死信队列，实现延迟队列 介绍：DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况： 消息被拒绝（basic.reject/ basic.nack）并且requeue=false">
+<meta name="twitter:title" content="源码项目">
+<meta name="twitter:description" content="Life doesn’t get easier，you just get stronger。">
     
         <link rel="alternate" type="application/atom+xml" title="个人主页" href="/atom.xml">
     
@@ -149,7 +149,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">rabbitMQ死信队列</div>
+        <div class="flex-col header-title ellipsis">源码项目</div>
         
         <div class="search-wrap" id="search-wrap">
             <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
@@ -172,11 +172,11 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">rabbitMQ死信队列</h1>
+        <h1 class="title">源码项目</h1>
         <h5 class="subtitle">
             
-                <time datetime="2018-05-03T06:10:19.000Z" itemprop="datePublished" class="page-time">
-  2018-05-03
+                <time datetime="2019-05-29T01:11:38.000Z" itemprop="datePublished" class="page-time">
+  2019-05-29
 </time>
 
 
@@ -197,17 +197,17 @@
     <aside class="post-widget">
         <nav class="post-toc-wrap" id="post-toc">
             <h4>TOC</h4>
-            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#应用场景："><span class="post-toc-number">1.</span> <span class="post-toc-text">应用场景：</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#介绍："><span class="post-toc-number">2.</span> <span class="post-toc-text">介绍：</span></a></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#使用说明："><span class="post-toc-number">3.</span> <span class="post-toc-text">使用说明：</span></a></li></ol>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#管理后台"><span class="post-toc-number">1.</span> <span class="post-toc-text">管理后台</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#eladmin"><span class="post-toc-number">1.1.</span> <span class="post-toc-text">eladmin</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#ruoyi"><span class="post-toc-number">1.2.</span> <span class="post-toc-text">ruoyi</span></a></li></ol></li><li class="post-toc-item post-toc-level-1"><a class="post-toc-link" href="#接口管理平台"><span class="post-toc-number">2.</span> <span class="post-toc-text">接口管理平台</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#哆啦接口管理"><span class="post-toc-number">2.1.</span> <span class="post-toc-text">哆啦接口管理</span></a></li></ol></li></ol>
         </nav>
     </aside>
     
-<article id="post-rabbitMQ死信队列"
+<article id="post-源码项目"
   class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">rabbitMQ死信队列</h1>
+        <h1 class="post-card-title">源码项目</h1>
         <div class="post-meta">
-            <time class="post-time" title="2018-05-03 14:10:19" datetime="2018-05-03T06:10:19.000Z"  itemprop="datePublished">2018-05-03</time>
+            <time class="post-time" title="2019-05-29 09:11:38" datetime="2019-05-29T01:11:38.000Z"  itemprop="datePublished">2019-05-29</time>
 
             
 	<ul class="article-category-list"><li class="article-category-list-item"><a class="article-category-list-link" href="/categories/软件/">软件</a></li></ul>
@@ -222,74 +222,34 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <h1 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h1><pre><code>MQ队列信息消费失败后进入死信队列，实现延迟队列
-</code></pre><h1 id="介绍："><a href="#介绍：" class="headerlink" title="介绍："></a>介绍：</h1><pre><code>DLX, Dead-Letter-Exchange。利用DLX, 当消息在一个队列中变成死信（dead message）之后，它能被重新publish到另一个Exchange，这个Exchange就是DLX。消息变成死信一向有一下几种情况：
-消息被拒绝（basic.reject/ basic.nack）并且requeue=false
-消息TTL过期（参考：RabbitMQ之TTL（Time-To-Live 过期时间））
-队列达到最大长度    DLX也是一个正常的Exchange，和一般的Exchange没有区别，它能在任何的队列上被指定，实际上就是设置某个队列的属性，当这个队列中有死信时，RabbitMQ就会自动的将这个消息重新发布到设置的Exchange上去，进而被路由到另一个队列，可以监听这个队列中消息做相应的处理，这个特性可以弥补RabbitMQ 3.0以前支持的immediate参数（可以参考RabbitMQ之mandatory和immediate）的功能。
-</code></pre><h1 id="使用说明："><a href="#使用说明：" class="headerlink" title="使用说明："></a>使用说明：</h1><pre><code>@Bean
-public Queue fundConfirmQueue() {
-    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
-    //设置死信交换机
-    map.put(&quot;x-dead-letter-exchange&quot;, MessageQueueName.DLX_EXCHANGE);
-    //设置死信routingKey
-    map.put(&quot;x-dead-letter-routing-key&quot;, MessageQueueName.DLX_ROUTING_KEY);
-    //消息被确认前的最大等待时间，默认为无限大
-    //arguments.put(&quot;x-message-ttl&quot;, 60000);
-    //消息队列的最大大长度，默认永不过期
-    //arguments.put(&quot;x-max-length&quot;, 300);
-    Queue queue = new Queue(MessageQueueName.fundConfirmQueue,true, false, false, map);
-    return queue;
-}
+            <h1 id="管理后台"><a href="#管理后台" class="headerlink" title="管理后台"></a>管理后台</h1><h2 id="eladmin"><a href="#eladmin" class="headerlink" title="eladmin"></a>eladmin</h2><ul>
+<li>项目基于 Spring Boot 2.1.0 、 Jpa、 Spring Security、redis、Vue的前后端分离的后台管理系统，项目采用分模块开发方式， 权限控制采用 RBAC，支持数据字典与数据权限管理，支持一键生成前后端代码，支持动态路由</li>
+<li>源码地址：<a href="https://github.com/elunez/eladmin" target="_blank" rel="noopener">https://github.com/elunez/eladmin</a></li>
+<li>演示地址：<a href="https://auauz.net" target="_blank" rel="noopener">https://auauz.net</a></li>
+</ul>
+<h2 id="ruoyi"><a href="#ruoyi" class="headerlink" title="ruoyi"></a>ruoyi</h2><ul>
+<li>基于SpringBoot2.1的权限管理系统 易读易懂、界面简洁美观。 核心技术采用Spring、MyBatis、Shiro没有任何其它重度依赖。直接运行即可用</li>
+<li>源码地址：<a href="https://github.com/lerry903/RuoYi" target="_blank" rel="noopener">https://github.com/lerry903/RuoYi</a></li>
+<li>演示地址：<a href="http://ruoyi.vip/login" target="_blank" rel="noopener">http://ruoyi.vip/login</a></li>
+</ul>
+<h1 id="接口管理平台"><a href="#接口管理平台" class="headerlink" title="接口管理平台"></a>接口管理平台</h1><h2 id="哆啦接口管理"><a href="#哆啦接口管理" class="headerlink" title="哆啦接口管理"></a>哆啦接口管理</h2><ul>
+<li>支持多团队、多项目、多环境，带给你更多的方便，支持完整的权限管理，功能权限（菜单权限，节点权限）、数据权限（项目权限，分类权限）</li>
+<li>官方地址：<a href="https://www.smaty.net/" target="_blank" rel="noopener">https://www.smaty.net/</a></li>
+<li>项目部署及配置：<a href="https://shuka.smaty.net/t/xapimanager" target="_blank" rel="noopener">https://shuka.smaty.net/t/xapimanager</a>   (安装和升级请参考手册)</li>
+</ul>
 
-@Bean
-public Queue fundCancelQueue() {
-    Map&lt;String, Object&gt; map = new HashMap&lt;String, Object&gt;();
-    //设置死信交换机
-    map.put(&quot;x-dead-letter-exchange&quot;, MessageQueueName.DLX_EXCHANGE);
-    //设置死信routingKey
-    map.put(&quot;x-dead-letter-routing-key&quot;, MessageQueueName.DLX_ROUTING_KEY);
-    Queue queue = new Queue(MessageQueueName.fundCancelQueue,true, false, false, map);
-    return queue;
-}
-
-/**
- * 死信交换机
- */
-@Bean
-public DirectExchange dlxExchange() {
-    return new DirectExchange(MessageQueueName.DLX_EXCHANGE);
-}
-
-/**
- * 死信队列
- */
-@Bean
-public Queue dlxQueue() {
-    return new Queue(MessageQueueName.DLX_QUEUE,true,false,false);
-}
-
-/**
- * 通过死信路由key绑定死信交换机和死信队列
- */
-@Bean
-public Binding dlxBinding() {
-    return BindingBuilder.bind(dlxQueue()).to(dlxExchange())
-            .with(MessageQueueName.DLX_ROUTING_KEY);
-}
-</code></pre>
         </div>
 
         <blockquote class="post-copyright">
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2018-05-25T09:38:50.240Z" itemprop="dateUpdated">2018-05-25 17:38:50</time>
+    最后更新时间：<time datetime="2019-05-29T09:01:36.222Z" itemprop="dateUpdated">2019-05-29 17:01:36</time>
 </span><br>
 
 
         
-        坚持原创技术分享，您的支持将鼓励我继续创作！，<a href="/2018/05/03/rabbitMQ死信队列/" target="_blank" rel="external">https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/</a>
+        坚持原创技术分享，您的支持将鼓励我继续创作！，<a href="/2019/05/29/源码项目/" target="_blank" rel="external">https://shenyihan.github.io/2019/05/29/源码项目/</a>
         
     </div>
     <footer>
@@ -309,7 +269,7 @@ public Binding dlxBinding() {
 
         <div class="post-footer">
             
-	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/软件/">软件</a></li></ul>
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/源码/">源码</a></li></ul>
 
 
             
@@ -319,7 +279,7 @@ public Binding dlxBinding() {
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/&title=《rabbitMQ死信队列》 — 个人主页&pic=https://shenyihan.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://shenyihan.github.io/2019/05/29/源码项目/&title=《源码项目》 — 个人主页&pic=https://shenyihan.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -329,22 +289,22 @@ public Binding dlxBinding() {
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/&title=《rabbitMQ死信队列》 — 个人主页&source=Life doesn’t get easier，you just get stronger" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://shenyihan.github.io/2019/05/29/源码项目/&title=《源码项目》 — 个人主页&source=Life doesn’t get easier，you just get stronger" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://shenyihan.github.io/2019/05/29/源码项目/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《rabbitMQ死信队列》 — 个人主页&url=https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/&via=https://shenyihan.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《源码项目》 — 个人主页&url=https://shenyihan.github.io/2019/05/29/源码项目/&via=https://shenyihan.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://shenyihan.github.io/2019/05/29/源码项目/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -367,18 +327,18 @@ public Binding dlxBinding() {
 <nav class="post-nav flex-row flex-justify-between">
   
     <div class="waves-block waves-effect prev">
-      <a href="/2018/05/11/Spring-Boot自定义启动图案/" id="post-prev" class="post-nav-link">
+      <a href="/2019/05/29/分布式事务/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Spring-Boot自定义启动图案</h4>
+        <h4 class="title">分布式事务</h4>
       </a>
     </div>
   
 
   
     <div class="waves-block waves-effect next">
-      <a href="/2018/04/28/免费制作网站/" id="post-next" class="post-nav-link">
+      <a href="/2019/05/29/实用工具/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">免费制作网站；</h4>
+        <h4 class="title">实用工具</h4>
       </a>
     </div>
   
@@ -483,7 +443,7 @@ public Binding dlxBinding() {
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/&title=《rabbitMQ死信队列》 — 个人主页&pic=https://shenyihan.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://shenyihan.github.io/2019/05/29/源码项目/&title=《源码项目》 — 个人主页&pic=https://shenyihan.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -493,22 +453,22 @@ public Binding dlxBinding() {
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/&title=《rabbitMQ死信队列》 — 个人主页&source=Life doesn’t get easier，you just get stronger" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://shenyihan.github.io/2019/05/29/源码项目/&title=《源码项目》 — 个人主页&source=Life doesn’t get easier，you just get stronger" data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
       <li>
-        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/" data-title=" Facebook">
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://shenyihan.github.io/2019/05/29/源码项目/" data-title=" Facebook">
           <i class="icon icon-facebook"></i>
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《rabbitMQ死信队列》 — 个人主页&url=https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/&via=https://shenyihan.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《源码项目》 — 个人主页&url=https://shenyihan.github.io/2019/05/29/源码项目/&via=https://shenyihan.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
       <li>
-        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://shenyihan.github.io/2018/05/03/rabbitMQ死信队列/" data-title=" Google+">
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://shenyihan.github.io/2019/05/29/源码项目/" data-title=" Google+">
           <i class="icon icon-google-plus"></i>
         </a>
       </li>
@@ -519,7 +479,7 @@ public Binding dlxBinding() {
 <div class="page-modal wx-share" id="wxShare">
     <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
-    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACJElEQVR42u3a0W7jMAwEwPz/T6fPh0OVXSopEGn8ZBRyrHEBgiL5eMTX85crX79e+f9Tj09cGBgYX8t4Lq/1C9Yvnv3Ob+tffBoMDIwLGEkoXN/nG0qo+d4wMDAwkvv1FvNkcU3CwMDAyBltQpkfcTEwMDDWjHZDs7DbFvI+chbHwMD4QkZedf/7+4/0NzAwML6K8SyvneJ++5mKXWFgYBzNaF/TFuDWCWLbEH2xEgMD42jGrDS/XzhrQ/kwWcTAwDiOkaRr+2uiQv8orGNgYJzH2CnZt2E6/5061GJgYBzN2M+12lbou96CgYFxDyM5dibbyp+dHVaj4hoGBsbRjPyMWzQUy6ZCe4j95y8YGBhHM2bBbjZssVP0Lz43BgbGoYzZeMRsfT46VqeJGBgYlzH2Q2c74NWW2DAwMO5kvKuhOAvTeVHvRWqIgYFxHGNW7m/TvjzUts9iYGDcwGhTtPync3ASiLe6shgYGEcwkpGLdut5GJ0NYWBgYNzJSLabj1zsJHn5p4xamBgYGAcx8vJZHhx3BiyGwxYYGBhHMz4xsDUbaa1LbBgYGEcz3pvk5Ynm7ENE/wcMDIzjGO9NztrCXF6Ay5NODAyMUxlJkN1pN+40KYsDNgYGxgWM2fjFmp0zZqkkBgYGRrKJeiQiThPrIiAGBgbG9oBp3uwcrsTAwLiAkRxiZ6X5NkHMD9IYGBj3MNqttEMVbXht2wMYGBhHM34AYO7GBFsloBwAAAAASUVORK5CYII=" alt="微信分享二维码">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMYAAADGCAAAAACs8KCBAAACK0lEQVR42u3aQZLCMAwFUe5/6cwFhtBfcigsd1YUEMePhZAlvV74ut5c5Ptk5fSu4iVDhoxtGdft9e4BnS3ev08+/efpMmTIOIBBNnG/If5p7fWHPcuQIUNG+zs8uZQhQ4aMpxn3d/E0VIYMGTLWLl1LB8k7j5zFZciQsSGDV92///qR/oYMGTK2Ylzhdd9o5N9MWwgfdiVDhozRjLQZufbYyZsNaJhDhgwZQxmdYQhSaOPNThLKH5npkCFDxs8zeAJX21ZaqqsNfMiQIWM2gwdcnt51ivutUCtDhoyhDJ5ldYJy2vLkP70MGTLOYdSGJ8gQGD/i8v0EPhkyZAxipEvXCm1PD5zJkCFjKiNN9TpjZGlBLVhThgwZoxm1RWvJHAnT5LAaZ7syZMgYx+C31Ur/z/1wMmTImM1IHx/MceCfIw3BH2ZGZMiQMYjBA+Kq0MlDdnBUliFDxmGMTnuyNhbWaRXEPVgZMmRsyEjDX5oUBh3UVWdxGTJkDGWQtCwt/deanZ1kVIYMGScweEp3z+CBmPcr0MoyZMg4gJEeWXmrgG8rLfzJkCHjBMYVXuQBq0p1AVWGDBmjGelRMy2TkcJcLXwvHmOVIUPGzzNqbcVOSO3cFVQNZciQMY5BAmUamnmY7qwvQ4YMGXwUIw2jZJ3itIgMGTKOZ5AEsXZY5Y2HZf8bMmTI2IrBRyvSRkJwEP1OuU2GDBkbMvjRsdP47LRL02EOGTJkDGL8AW4+S6nuCpWOAAAAAElFTkSuQmCC" alt="微信分享二维码">
 </div>
 
 

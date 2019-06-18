@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://shenyihan.github.io/"/>
-  <updated>2019-05-29T02:17:16.042Z</updated>
+  <updated>2019-06-18T09:20:48.886Z</updated>
   <id>https://shenyihan.github.io/</id>
   
   <author>
@@ -17,13 +17,75 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>基于consul实现分布式锁</title>
+    <link href="https://shenyihan.github.io/2019/06/18/%E5%9F%BA%E4%BA%8Econsul%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81/"/>
+    <id>https://shenyihan.github.io/2019/06/18/基于consul实现分布式锁/</id>
+    <published>2019-06-18T09:04:28.000Z</published>
+    <updated>2019-06-18T09:20:48.886Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="基于consul实现分布式锁"><a href="#基于consul实现分布式锁" class="headerlink" title="基于consul实现分布式锁"></a>基于consul实现分布式锁</h1><h2 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h2><p>依托于consul的kv存储API中的acquire和release操作来实现，每个注册到consul的服务通过createsession方式获取sessionid</p><h2 id="实现流程"><a href="#实现流程" class="headerlink" title="实现流程"></a>实现流程</h2><figure class="image-bubble">                <div class="img-lightbox">                    <div class="overlay"></div>                    <img src="https://images2017.cnblogs.com/blog/285763/201712/285763-20171212165802457-1504617511.png" alt="流程图" title="">                </div>                <div class="image-caption">流程图</div>            </figure><h2 id="实现代码"><a href="#实现代码" class="headerlink" title="实现代码"></a>实现代码</h2><p>三个类<br>BaseLock.java<br>Lock.java<br>TestLock.java<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.ecwid.consul.v1.ConsulClient;</span><br><span class="line"><span class="keyword">import</span> com.ecwid.consul.v1.session.model.NewSession;</span><br><span class="line"><span class="keyword">import</span> com.ecwid.consul.v1.session.model.Session;</span><br><span class="line"><span class="keyword">import</span> lombok.Data;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Timer;</span><br><span class="line"><span class="keyword">import</span> java.util.TimerTask;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseLock</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> ConsulClient consulClient;</span><br><span class="line">    <span class="keyword">protected</span> String sessionId = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">protected</span> String keyPath;   <span class="comment">// 互斥锁、信号量存储在consul中的基础key路径</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Timer timer;</span><br><span class="line">    <span class="comment">// consul session 超时时间</span></span><br><span class="line">    <span class="keyword">private</span> String sessionTTL = <span class="string">"10s"</span>;</span><br><span class="line">    <span class="comment">// consul renew session定时任务第一次执行延迟时间</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> sessionTimerDelay = <span class="number">5000L</span>;</span><br><span class="line">    <span class="comment">// consul renew session定时任务每次执行时间间隔让consul知道此服务处于存活状态</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">long</span> sessionTimerPeriod = <span class="number">3000L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> consulClient</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> lockKey       同步锁在consul的KV存储中的Key路径，会自动增加prefix前缀，方便归类查询</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">BaseLock</span><span class="params">(ConsulClient consulClient, String lockKey)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.consulClient = consulClient;</span><br><span class="line">        <span class="keyword">this</span>.keyPath = lockKey;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 创建session</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sessionName</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> String <span class="title">createSession</span><span class="params">(String sessionName)</span> </span>&#123;</span><br><span class="line">        NewSession newSession = <span class="keyword">new</span> NewSession();</span><br><span class="line">        newSession.setName(sessionName);</span><br><span class="line">      </span><br><span class="line">        newSession.setBehavior(Session.Behavior.DELETE);</span><br><span class="line">        newSession.setTtl(sessionTTL);</span><br><span class="line">        <span class="keyword">this</span>.sessionId = consulClient.sessionCreate(newSession, <span class="keyword">null</span>).getValue();</span><br><span class="line">        timer = <span class="keyword">new</span> Timer();</span><br><span class="line">        timer.scheduleAtFixedRate(<span class="keyword">new</span> TimerTask() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                log.info(<span class="string">"renew session, key path=&#123;&#125;"</span>, keyPath);</span><br><span class="line">                consulClient.renewSession(sessionId, <span class="keyword">null</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; , sessionTimerDelay, sessionTimerPeriod);</span><br><span class="line">        <span class="keyword">return</span> consulClient.sessionCreate(newSession, <span class="keyword">null</span>).getValue();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 根据成员变量sessionId来销毁session</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">destroySession</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sessionId != <span class="keyword">null</span>) &#123;</span><br><span class="line">            cancelTimer();</span><br><span class="line">            consulClient.sessionDestroy(sessionId, <span class="keyword">null</span>);</span><br><span class="line">            sessionId = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cancelTimer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">/*if (EmptyUtil.isObjEmpty(timer)) &#123;</span></span><br><span class="line"><span class="comment">            return;</span></span><br><span class="line"><span class="comment">        &#125;*/</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            timer.cancel();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            log.error(<span class="string">"cancel timer failed, keyPath=&#123;&#125;, message=&#123;&#125;"</span>, keyPath, e.getMessage());</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.ecwid.consul.v1.ConsulClient;</span><br><span class="line"><span class="keyword">import</span> com.ecwid.consul.v1.kv.model.PutParams;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.time.LocalDateTime;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 基于Consul的互斥锁</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Lock</span> <span class="keyword">extends</span> <span class="title">BaseLock</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String prefix = <span class="string">"lock/"</span>;  <span class="comment">// 同步锁参数前缀</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> consulClient</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> lockKey       同步锁在consul的KV存储中的Key路径，会自动增加prefix前缀，方便归类查询</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Lock</span><span class="params">(ConsulClient consulClient, String lockKey)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(consulClient, prefix + lockKey);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取同步锁</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> block            是否阻塞，直到获取到锁为止，默认尝试间隔时间为500ms。</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">lock</span><span class="params">(<span class="keyword">boolean</span> block)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> lock(block, <span class="number">500L</span>, <span class="keyword">null</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取同步锁</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> block            是否阻塞，直到获取到锁为止</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> timeInterval     block=true时有效，再次尝试的间隔时间</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> maxTimes         block=true时有效，最大尝试次数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">lock</span><span class="params">(<span class="keyword">boolean</span> block, Long timeInterval, Integer maxTimes)</span> <span class="keyword">throws</span> InterruptedException </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sessionId != <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(sessionId + <span class="string">" - Already locked!"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        sessionId = createSession(<span class="string">"lock-"</span> + <span class="keyword">this</span>.keyPath);</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">            PutParams putParams = <span class="keyword">new</span> PutParams();</span><br><span class="line">            putParams.setAcquireSession(sessionId);</span><br><span class="line">            <span class="keyword">if</span>(consulClient.setKVValue(keyPath, <span class="string">"lock:"</span> + LocalDateTime.now(), putParams).getValue()) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span>(block) &#123;</span><br><span class="line">                <span class="keyword">if</span>(maxTimes != <span class="keyword">null</span> &amp;&amp; count &gt;= maxTimes) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    count ++;</span><br><span class="line">                    <span class="keyword">if</span>(timeInterval != <span class="keyword">null</span>)</span><br><span class="line">                        Thread.sleep(timeInterval);</span><br><span class="line">                    <span class="keyword">continue</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 释放同步锁</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">unlock</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">boolean</span> success = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            success = executeUnlock();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Throwable e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> success;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">executeUnlock</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        destroySession();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestLock</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testLock</span><span class="params">()</span> <span class="keyword">throws</span> Exception  </span>&#123;</span><br><span class="line">        ConsulClient consulClient = <span class="keyword">new</span> ConsulClient(<span class="string">"192.168.6.60"</span>);</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> LockRunner(<span class="number">1</span>)).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> LockRunner(<span class="number">2</span>)).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> LockRunner(<span class="number">3</span>)).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> LockRunner(<span class="number">4</span>)).start();</span><br><span class="line">        <span class="keyword">new</span> Thread(<span class="keyword">new</span> LockRunner(<span class="number">5</span>)).start();</span><br><span class="line">        Thread.sleep(<span class="number">6000L</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Slf</span>4j</span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">LockRunner</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> flag;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Lock lock = <span class="keyword">new</span> Lock(<span class="keyword">new</span> ConsulClient(<span class="string">"192.168.6.60"</span>), <span class="string">"lock-key"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">// 获取分布式互斥锁（参数含义：阻塞模式、每次尝试获取锁的间隔500ms、尝试n次）</span></span><br><span class="line">            <span class="keyword">if</span> (lock.lock(<span class="keyword">true</span>, <span class="number">500L</span>, <span class="number">10</span>)) &#123;</span><br><span class="line">                log.info(<span class="string">"Thread &#123;&#125; start!"</span>, flag);</span><br><span class="line">                <span class="comment">// 处理业务逻辑</span></span><br><span class="line">                Thread.sleep(<span class="keyword">new</span> Random().nextInt(<span class="number">5000</span>));</span><br><span class="line">                log.info(<span class="string">"Thread &#123;&#125; end!"</span>, flag);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            lock.unlock();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      Life doesn’t get easier，you just get stronger。
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>分布式事务</title>
+    <link href="https://shenyihan.github.io/2019/05/29/%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1/"/>
+    <id>https://shenyihan.github.io/2019/05/29/分布式事务/</id>
+    <published>2019-05-29T09:30:13.000Z</published>
+    <updated>2019-05-30T01:20:59.070Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="分布式事务介绍"><a href="#分布式事务介绍" class="headerlink" title="分布式事务介绍"></a>分布式事务介绍</h1><ul><li>简单说下什么是分布式事务:分布式系统中一个请求请求多个服务时，要么同时成功要么同时失败。不能出现部分系统成功部分失败</li></ul><h1 id="分布式解决方案"><a href="#分布式解决方案" class="headerlink" title="分布式解决方案"></a>分布式解决方案</h1><h2 id="tx-lcn"><a href="#tx-lcn" class="headerlink" title="tx_lcn"></a>tx_lcn</h2><ul><li>TX-LCN 主要有两个模块，Tx-Client(TC) Tx-Manager(TM). TC作为微服务下的依赖，TM是独立的服务。</li><li>官网：<a href="http://www.txlcn.org/zh-cn/index.html" target="_blank" rel="noopener">http://www.txlcn.org/zh-cn/index.html</a></li></ul><h2 id="seata-目前不建议线上版本"><a href="#seata-目前不建议线上版本" class="headerlink" title="seata(目前不建议线上版本)"></a>seata(目前不建议线上版本)</h2><ul><li>对业务无侵入：即减少技术架构上的微服务化所带来的分布式事务问题对业务的侵入</li><li>高性能：减少分布式事务解决方案所带来的性能消耗</li><li>说明：<a href="https://blog.csdn.net/hosaos/article/details/89136666" target="_blank" rel="noopener">https://blog.csdn.net/hosaos/article/details/89136666</a></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      Life doesn’t get easier，you just get stronger。
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="软件" scheme="https://shenyihan.github.io/tags/%E8%BD%AF%E4%BB%B6/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>源码项目</title>
+    <link href="https://shenyihan.github.io/2019/05/29/%E6%BA%90%E7%A0%81%E9%A1%B9%E7%9B%AE/"/>
+    <id>https://shenyihan.github.io/2019/05/29/源码项目/</id>
+    <published>2019-05-29T01:11:38.000Z</published>
+    <updated>2019-05-29T09:01:36.222Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="管理后台"><a href="#管理后台" class="headerlink" title="管理后台"></a>管理后台</h1><h2 id="eladmin"><a href="#eladmin" class="headerlink" title="eladmin"></a>eladmin</h2><ul><li>项目基于 Spring Boot 2.1.0 、 Jpa、 Spring Security、redis、Vue的前后端分离的后台管理系统，项目采用分模块开发方式， 权限控制采用 RBAC，支持数据字典与数据权限管理，支持一键生成前后端代码，支持动态路由</li><li>源码地址：<a href="https://github.com/elunez/eladmin" target="_blank" rel="noopener">https://github.com/elunez/eladmin</a></li><li>演示地址：<a href="https://auauz.net" target="_blank" rel="noopener">https://auauz.net</a></li></ul><h2 id="ruoyi"><a href="#ruoyi" class="headerlink" title="ruoyi"></a>ruoyi</h2><ul><li>基于SpringBoot2.1的权限管理系统 易读易懂、界面简洁美观。 核心技术采用Spring、MyBatis、Shiro没有任何其它重度依赖。直接运行即可用</li><li>源码地址：<a href="https://github.com/lerry903/RuoYi" target="_blank" rel="noopener">https://github.com/lerry903/RuoYi</a></li><li>演示地址：<a href="http://ruoyi.vip/login" target="_blank" rel="noopener">http://ruoyi.vip/login</a></li></ul><h1 id="接口管理平台"><a href="#接口管理平台" class="headerlink" title="接口管理平台"></a>接口管理平台</h1><h2 id="哆啦接口管理"><a href="#哆啦接口管理" class="headerlink" title="哆啦接口管理"></a>哆啦接口管理</h2><ul><li>支持多团队、多项目、多环境，带给你更多的方便，支持完整的权限管理，功能权限（菜单权限，节点权限）、数据权限（项目权限，分类权限）</li><li>官方地址：<a href="https://www.smaty.net/" target="_blank" rel="noopener">https://www.smaty.net/</a></li><li>项目部署及配置：<a href="https://shuka.smaty.net/t/xapimanager" target="_blank" rel="noopener">https://shuka.smaty.net/t/xapimanager</a>   (安装和升级请参考手册)</li></ul>]]></content>
+    
+    <summary type="html">
+    
+      Life doesn’t get easier，you just get stronger。
+    
+    </summary>
+    
+      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
+    
+    
+      <category term="源码" scheme="https://shenyihan.github.io/tags/%E6%BA%90%E7%A0%81/"/>
+    
+  </entry>
+  
+  <entry>
     <title>实用工具</title>
     <link href="https://shenyihan.github.io/2019/05/29/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7/"/>
     <id>https://shenyihan.github.io/2019/05/29/实用工具/</id>
     <published>2019-05-29T01:11:38.000Z</published>
-    <updated>2019-05-29T02:17:16.042Z</updated>
+    <updated>2019-05-29T09:00:55.477Z</updated>
     
-    <content type="html"><![CDATA[<h1 id="接口管理平台"><a href="#接口管理平台" class="headerlink" title="接口管理平台"></a>接口管理平台</h1><h2 id="哆啦接口管理官网"><a href="#哆啦接口管理官网" class="headerlink" title="哆啦接口管理官网"></a>哆啦接口管理官网</h2><ul><li>官方地址：<a href="https://www.smaty.net/" target="_blank" rel="noopener">https://www.smaty.net/</a></li><li>项目部署及配置：<a href="https://shuka.smaty.net/t/xapimanager" target="_blank" rel="noopener">https://shuka.smaty.net/t/xapimanager</a>   (安装和升级请参考手册)</li></ul><h2 id="功能说明"><a href="#功能说明" class="headerlink" title="功能说明"></a>功能说明</h2><ul><li>支持多团队、多项目、多环境，带给你更多的方便</li><li>支持完整的权限管理，功能权限（菜单权限，节点权限）、数据权限（项目权限，分类权限）</li><li>优化Api管理、request、response数据多层级导入及展示</li><li>简化操作、增加易用性、让体验更优</li><li>线上版本，打开即用，无需部署及配置，为了保证您的数据安全，我们进行了多重保护</li><li>开源版本，简化安装，无需其他辅助软件，直接运行</li></ul>]]></content>
+    <content type="html"><![CDATA[<h1 id="博客"><a href="#博客" class="headerlink" title="博客"></a>博客</h1><ul><li><a href="https://funtl.com/" target="_blank" rel="noopener">https://funtl.com/</a></li></ul>]]></content>
     
     <summary type="html">
     
@@ -359,6 +421,32 @@
   </entry>
   
   <entry>
+    <title>理论剖析</title>
+    <link href="https://shenyihan.github.io/2018/01/01/%E7%90%86%E8%AE%BA%E5%89%96%E6%9E%90/"/>
+    <id>https://shenyihan.github.io/2018/01/01/理论剖析/</id>
+    <published>2018-01-01T01:56:16.000Z</published>
+    <updated>2018-02-27T02:10:38.060Z</updated>
+    
+    <content type="html"><![CDATA[<p>总结一些著名理论的适用场景</p><h1 id="江恩理论"><a href="#江恩理论" class="headerlink" title="江恩理论"></a>江恩理论</h1><h2 id="关注两种时间周期：对等周期和对等循环周期"><a href="#关注两种时间周期：对等周期和对等循环周期" class="headerlink" title="关注两种时间周期：对等周期和对等循环周期"></a>关注两种时间周期：对等周期和对等循环周期</h2><pre><code>对等周期：下跌和上涨时间（所用交易日）相同对等循环周期：选定一组高低点，在这组高低点的区间内又有很多的高低点，区间内第一个高低点距离区间左临界位交易日个数为8T，则区间右临界位+8即为变盘点（顶或底）；</code></pre><h1 id="龙虎榜的重要性"><a href="#龙虎榜的重要性" class="headerlink" title="龙虎榜的重要性"></a>龙虎榜的重要性</h1><h2 id="例如说佛山普澜二路证券营业部"><a href="#例如说佛山普澜二路证券营业部" class="headerlink" title="例如说佛山普澜二路证券营业部"></a>例如说佛山普澜二路证券营业部</h2>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;总结一些著名理论的适用场景&lt;/p&gt;
+&lt;h1 id=&quot;江恩理论&quot;&gt;&lt;a href=&quot;#江恩理论&quot; class=&quot;headerlink&quot; title=&quot;江恩理论&quot;&gt;&lt;/a&gt;江恩理论&lt;/h1&gt;&lt;h2 id=&quot;关注两种时间周期：对等周期和对等循环周期&quot;&gt;&lt;a href=&quot;#关注两种
+      
+    
+    </summary>
+    
+      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
+    
+    
+      <category term="股票操作" scheme="https://shenyihan.github.io/tags/%E8%82%A1%E7%A5%A8%E6%93%8D%E4%BD%9C/"/>
+    
+  </entry>
+  
+  <entry>
     <title>短线操作</title>
     <link href="https://shenyihan.github.io/2018/01/01/%E7%9F%AD%E7%BA%BF%E6%93%8D%E4%BD%9C/"/>
     <id>https://shenyihan.github.io/2018/01/01/短线操作/</id>
@@ -374,32 +462,6 @@
         &lt;pre&gt;&lt;code&gt;此篇博文用于记录本人2018所有短线操作，操作标的选取采用自创数据指标加通达信软件预警提示。
 暂称这个指标为涨峰回吐，根据股票历史数据回测年化收益率能达到50%，有成功当然也会有失败，探索阶段，努力试错。
 20180111，买入：002208合肥城建 成交价
-      
-    
-    </summary>
-    
-      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
-    
-    
-      <category term="股票操作" scheme="https://shenyihan.github.io/tags/%E8%82%A1%E7%A5%A8%E6%93%8D%E4%BD%9C/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>理论剖析</title>
-    <link href="https://shenyihan.github.io/2018/01/01/%E7%90%86%E8%AE%BA%E5%89%96%E6%9E%90/"/>
-    <id>https://shenyihan.github.io/2018/01/01/理论剖析/</id>
-    <published>2018-01-01T01:56:16.000Z</published>
-    <updated>2018-02-27T02:10:38.060Z</updated>
-    
-    <content type="html"><![CDATA[<p>总结一些著名理论的适用场景</p><h1 id="江恩理论"><a href="#江恩理论" class="headerlink" title="江恩理论"></a>江恩理论</h1><h2 id="关注两种时间周期：对等周期和对等循环周期"><a href="#关注两种时间周期：对等周期和对等循环周期" class="headerlink" title="关注两种时间周期：对等周期和对等循环周期"></a>关注两种时间周期：对等周期和对等循环周期</h2><pre><code>对等周期：下跌和上涨时间（所用交易日）相同对等循环周期：选定一组高低点，在这组高低点的区间内又有很多的高低点，区间内第一个高低点距离区间左临界位交易日个数为8T，则区间右临界位+8即为变盘点（顶或底）；</code></pre><h1 id="龙虎榜的重要性"><a href="#龙虎榜的重要性" class="headerlink" title="龙虎榜的重要性"></a>龙虎榜的重要性</h1><h2 id="例如说佛山普澜二路证券营业部"><a href="#例如说佛山普澜二路证券营业部" class="headerlink" title="例如说佛山普澜二路证券营业部"></a>例如说佛山普澜二路证券营业部</h2>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;总结一些著名理论的适用场景&lt;/p&gt;
-&lt;h1 id=&quot;江恩理论&quot;&gt;&lt;a href=&quot;#江恩理论&quot; class=&quot;headerlink&quot; title=&quot;江恩理论&quot;&gt;&lt;/a&gt;江恩理论&lt;/h1&gt;&lt;h2 id=&quot;关注两种时间周期：对等周期和对等循环周期&quot;&gt;&lt;a href=&quot;#关注两种
       
     
     </summary>
@@ -434,94 +496,6 @@
     
     
       <category term="软件安装" scheme="https://shenyihan.github.io/tags/%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>介绍资本公积金</title>
-    <link href="https://shenyihan.github.io/2017/12/29/my-new-post/"/>
-    <id>https://shenyihan.github.io/2017/12/29/my-new-post/</id>
-    <published>2017-12-29T03:38:16.000Z</published>
-    <updated>2018-01-11T06:28:19.634Z</updated>
-    
-    <content type="html"><![CDATA[<p>公积金就是从企业成立至今所获得的所有的利润中保留的一部分。<br>要理解资本公积金，必须结合 净资产，股本，未分配利润等 项目结合理解。<br>净资产=股本+资本公积金+未分配利润<br>举例来说：<br>公司1990年成立 股本是1千万。公司的净资产也是1千万。<br>一开始啥也没有，公积金就是零，未分配利润也是零。</p><p>5年后，90-95年公司总共获利2千万，净资产就变成了3千万。按照国家规定，利润的10%必须转成资本公积金。所以：<br>股本还是1千万，公积金就是2百万，未分配利润就是1千8百万。总计净资产3千万。<br>每股公积金要除以总股本，<br>所以每股公积金=0.2元。每股未分配利润1.8元，每股净资产3元。</p><p>95年，公司赚到了钱，应该给股东发红利了。根据公司法，股东只能分未分配利润，而股本和公积金是不能挪用的。因此公司最多派发1千8百万红利。最终决定向股东派发2百万红利。<br>分红之后：股本还是1千万，公积金2百万，未分配利润变成1千6百万，净资产变成2千8百万。</p><p>96年，公司上市，公司每股净资产是2.8元，那么发行价10元应该没问题。发行了6百万股新股，募集了6千万资金。而发行面值1元的股票，售价10元，多出的9元就会计入公积金。也就是多了5千4百万的公积金。<br>IPO后：股本1千6百万，公积金提高到5千6百万，未分配利润没变1千6百万，净资产8千8百万。<br>每股公积金：3.5元，每股未分配利润：1元，每股净资产：5.5元。</p><p>97年，公司开始玩送转游戏。 新股上市，在高增长，高送转的预期下，股价到达20元。<br>公司决定：10转10. 啥意思？ 就是每10股股票通过公积金转增股本10股。<br>总体数据：<br>原来是这样的（单位百万元）： 股本16 ， 公积金56， 未分配利润16， 净资产88<br>转增之后变成这样： 股本32， 公积金40， 未分配利润16， 净资产88<br>每股数据：<br>原来是这样的： 每股公积金：3.5元 每股未分配利润：1元 每股净资产：5.5元<br>转增之后变成这样： 每股公积金：1.25元 每股未分配利润：0.5元 每股净资产：2.75元</p><p>除权后股价从20元变成10元，每10股变成20股。 每股公积金大幅降低，每股净资产减半。</p><p>综上所述，公积金是个什么玩意？公积金就是净资产的一个部分，净资产的增加必须靠利润或者发行新股，公积金的值其实就是历年积累的利润×10%加上新股发行溢价。公积金不能动，所以和股本差不多，可以转成股本。 </p><p>每股公积金高意味着公司有高送转的潜力，送转对公司未来发展没有影响，对股东也没有派发红利，只是在财务上调整了一下数据。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;公积金就是从企业成立至今所获得的所有的利润中保留的一部分。&lt;br&gt;要理解资本公积金，必须结合 净资产，股本，未分配利润等 项目结合理解。&lt;br&gt;净资产=股本+资本公积金+未分配利润&lt;br&gt;举例来说：&lt;br&gt;公司1990年成立 股本是1千万。公司的净资产也是1千万。&lt;br&gt;一
-      
-    
-    </summary>
-    
-      <category term="金融" scheme="https://shenyihan.github.io/categories/%E9%87%91%E8%9E%8D/"/>
-    
-    
-      <category term="金融知识点" scheme="https://shenyihan.github.io/tags/%E9%87%91%E8%9E%8D%E7%9F%A5%E8%AF%86%E7%82%B9/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo加密实例</title>
-    <link href="https://shenyihan.github.io/2017/12/28/hexo%E5%8A%A0%E5%AF%86%E5%AE%9E%E4%BE%8B/"/>
-    <id>https://shenyihan.github.io/2017/12/28/hexo加密实例/</id>
-    <published>2017-12-28T09:58:18.000Z</published>
-    <updated>2018-01-12T10:15:48.897Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>================================================================================================恭喜你，测试成功。去给自己的博客设置一道屏障吧。================================================================================================</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;pre&gt;&lt;code&gt;================================================
-================================================
-
-
-
-恭喜你，测试成功。去给自己的博客设置一道屏障吧。
-
-
-
-
-      
-    
-    </summary>
-    
-      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
-    
-    
-      <category term="博客搭建" scheme="https://shenyihan.github.io/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>hexo设置加密博文</title>
-    <link href="https://shenyihan.github.io/2017/12/28/hexo%E8%AE%BE%E7%BD%AE%E5%8A%A0%E5%AF%86%E5%8D%9A%E6%96%87/"/>
-    <id>https://shenyihan.github.io/2017/12/28/hexo设置加密博文/</id>
-    <published>2017-12-28T09:45:55.000Z</published>
-    <updated>2018-01-12T10:36:39.297Z</updated>
-    
-    <content type="html"><![CDATA[<pre><code>最近写了一篇个人文章，想设置成密码登录后才能观看。网上也试了一些其他人的方案，但基本都不能用现就修改流程总结如下：一、目    的：对某一篇文章输入密码后才能观看。二、修改内容：1、增加js前端控制功能              mythemes\layout\_partial\head.ejs 增加如下代码                &lt;%                var password = page.password;                if(password)                {                %&gt;                    &lt;script&gt;                    (function(){                        if (prompt(&apos;请输入文章密码&apos;) != &quot;&lt;%= password %&gt;&quot;){                            alert(&apos;密码错误！&apos;);                            history.back();                        }                    })();                   &lt;/script&gt;                &lt;%}%&gt;               2、将需要设置加密模式观看的md文章抬头增加 password: 你的密码；类似于tags标签。三、实    例： 链接：https://shenyihan.github.io/2017/12/28/hexo加密实例/                密码：password</code></pre>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;pre&gt;&lt;code&gt;最近写了一篇个人文章，想设置成密码登录后才能观看。网上也试了一些其他人的方案，但基本都不能用
-现就修改流程总结如下：
-一、目    的：对某一篇文章输入密码后才能观看。
-二、修改内容：1、增加js前端控制功能
-              mythemes\l
-      
-    
-    </summary>
-    
-      <category term="软件" scheme="https://shenyihan.github.io/categories/%E8%BD%AF%E4%BB%B6/"/>
-    
-    
-      <category term="博客搭建" scheme="https://shenyihan.github.io/tags/%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA/"/>
     
   </entry>
   
